@@ -23,8 +23,9 @@ public class Earth : MonoBehaviour
         objects.Add(obj);
     }
 
-    public void RemoveEarthObject(EarthObject obj)
+    public void KillEarthObject(EarthObject obj)
     {
         objects.Remove(obj);
+        Destroy(obj);
     }
 }

@@ -24,6 +24,9 @@ public sealed class EarthObject : MonoBehaviour
 
     private EarthObjectController controller;
 
+    /// <summary>
+    /// 이거를 갈아치워주면 다른 유닛처럼 행동하기 시작함
+    /// </summary>
     public EarthObjectController Controller
     {
         get => controller;
@@ -34,7 +37,11 @@ public sealed class EarthObject : MonoBehaviour
                 controller.DetachThis();
             }
             controller = value;
-            controller.AttachThis(this);
+
+            if (controller != null)
+            {
+                controller.AttachThis(this);
+            }
         }
     }
 
@@ -45,6 +52,8 @@ public sealed class EarthObject : MonoBehaviour
 
     private void Update()
     {
+        if (controller == null) return;
+
         // 관련 리소스가 로드되지 않은 상태에선 행동을 멈춘다.
         if (!controller.IsResourceLoaded) return;
 
@@ -56,5 +65,10 @@ public sealed class EarthObject : MonoBehaviour
         transform.localEulerAngles = currentEulerAngle;
 
         controller.OnUpdate();
+    }
+
+    private void OnDestroy()
+    {
+        Controller = null;
     }
 }
