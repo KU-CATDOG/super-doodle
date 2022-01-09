@@ -58,10 +58,10 @@ public sealed class EarthObject : MonoBehaviour
         if (!controller.IsResourceLoaded) return;
 
         // 모든 오브젝트 공통으로 위치와 속도에 따라 움직이게 한다.
-        Radian -= 2 * Mathf.PI / MoveSpeed * Time.deltaTime;
+        Radian += 2 * Mathf.PI / MoveSpeed * Time.deltaTime;
 
         var currentEulerAngle = transform.localEulerAngles;
-        currentEulerAngle.z = Radian / (2 * Mathf.PI) * 360;
+        currentEulerAngle.z = -Radian / (2 * Mathf.PI) * 360;
         transform.localEulerAngles = currentEulerAngle;
 
         controller.OnUpdate();

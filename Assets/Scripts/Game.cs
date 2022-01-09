@@ -10,8 +10,6 @@ public class Game : MonoBehaviour
     {
         Instance = this;
         PressKeyDetector.Init();
-
-        InitGame();
     }
 
     private void OnDestroy()
