@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerObjectController : EarthObjectController
 {
-    public float AttackRangeRadian { get; set; } = Mathf.PI / 4;
+    private readonly List<IEnemyController> toHitCache = new List<IEnemyController>();
 
     protected override IEnumerator LoadResources()
     {
@@ -17,7 +17,6 @@ public class PlayerObjectController : EarthObjectController
 
     protected override void OnAttached()
     {
-        MessageSystem.Instance.Subscribe<SingleKeyPressedEvent>(OnSingleKeyEvent);
     }
 
     protected override void OnDetached()
@@ -28,32 +27,25 @@ public class PlayerObjectController : EarthObjectController
     {
     }
 
-    private void OnSingleKeyEvent(IEvent e)
+    public override void OnUpdate()
     {
-        if (!(e is SingleKeyPressedEvent se)) return;
-
-        foreach (var i in GetEnemyInAttackRange())
-        {
-            i.OnHitByKey(se.PressedKey);
-        }
-    }
-
-    private List<IEnemyController> GetEnemyInAttackRange()
-    {
-        var result = new List<IEnemyController>();
-
         foreach (var i in Holder.Earth.EarthObjects)
         {
             if (!(i.Controller is IEnemyController enemy)) continue;
 
             var distanceRadian = Mod(i.Radian, Mathf.PI * 2) - Mod(Holder.Radian, Mathf.PI * 2);
 
-            if (distanceRadian < 0 || distanceRadian > AttackRangeRadian) continue;
+            if (Mathf.Abs(distanceRadian) > 0.1f) continue;
 
-            result.Add(enemy);
+            toHitCache.Add(enemy);
         }
 
-        return result;
+        foreach (var i in toHitCache)
+        {
+            i.OnHit();
+        }
+
+        toHitCache.Clear();
     }
 
     private float Mod(float x, float m)

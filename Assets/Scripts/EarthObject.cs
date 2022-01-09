@@ -57,14 +57,19 @@ public sealed class EarthObject : MonoBehaviour
         // 관련 리소스가 로드되지 않은 상태에선 행동을 멈춘다.
         if (!controller.IsResourceLoaded) return;
 
+        SetPosition();
+
+        controller.OnUpdate();
+    }
+
+    public void SetPosition()
+    {
         // 모든 오브젝트 공통으로 위치와 속도에 따라 움직이게 한다.
         Radian += 2 * Mathf.PI / MoveSpeed * Time.deltaTime;
 
         var currentEulerAngle = transform.localEulerAngles;
         currentEulerAngle.z = -Radian / (2 * Mathf.PI) * 360;
         transform.localEulerAngles = currentEulerAngle;
-
-        controller.OnUpdate();
     }
 
     private void OnDestroy()
