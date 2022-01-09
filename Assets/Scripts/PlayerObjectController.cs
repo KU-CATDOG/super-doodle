@@ -1,6 +1,5 @@
 using System.Collections;
 using Tool;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerObjectController : EarthObjectController

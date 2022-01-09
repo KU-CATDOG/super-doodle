@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -47,7 +46,6 @@ namespace Tool
     /// <summary>
     /// 이걸 참조하는 인스턴스가 전부 Destroy되거나 하면 이것도 Release 해줘야 함
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public class LoadedAsset<T> where T : UnityEngine.Object
     {
         private readonly T resource;
