@@ -7,11 +7,9 @@ public class PlayerObjectController : EarthObjectController
 {
     protected override IEnumerator LoadResources()
     {
-        using var loader = new AssetLoader();
-
-        yield return loader.LoadAssetAsync<GameObject>("Prefabs/EarthObjects/Player.prefab", x =>
+        yield return AssetLoader.LoadAssetAsync<GameObject>("Prefabs/EarthObjects/Player.prefab", x =>
         {
-            resource = Object.Instantiate(x);
+            resource = Object.Instantiate(x.Resource);
         });
     }
 
