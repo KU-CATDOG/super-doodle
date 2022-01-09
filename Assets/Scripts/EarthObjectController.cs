@@ -56,4 +56,11 @@ public abstract class EarthObjectController
     /// resource가 Destroy 되기 전에 필요한 처리가 있으면 여기서 해결
     /// </summary>
     protected abstract void UnloadResources();
+
+    /// <summary>
+    /// 땅이 제시한 키를 맞추건 틀리건 그 위에 있는 모든 오브젝트들의 이 함수가 불림
+    /// </summary>
+    public virtual void OnEarthKeyPressed(bool corrected)
+    {
+    }
 }

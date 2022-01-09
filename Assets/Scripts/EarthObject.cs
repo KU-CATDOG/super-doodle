@@ -15,10 +15,10 @@ public sealed class EarthObject : MonoBehaviour
     public float Radian { get; set; }
 
     /// <summary>
-    /// 이동 속도 (한 바퀴를 도는 데에 몇 초 걸리는가)
-    /// 시계방향(플레이어와 마왕이 움직이는 방향)을 양수로 두고, 작을수록 빠름
+    /// 이동 속도 (1초에 몇 라디안을 가는가)
+    /// 시계방향(플레이어와 마왕이 움직이는 방향)을 양수로 둠
     /// </summary>
-    public float MoveSpeed { get; set; } = 15;
+    public float MoveSpeed { get; set; }
 
     public Earth Earth { get; private set; }
 
@@ -65,7 +65,7 @@ public sealed class EarthObject : MonoBehaviour
     public void SetPosition()
     {
         // 모든 오브젝트 공통으로 위치와 속도에 따라 움직이게 한다.
-        Radian += 2 * Mathf.PI / MoveSpeed * Time.deltaTime;
+        Radian += MoveSpeed * Time.deltaTime;
 
         var currentEulerAngle = transform.localEulerAngles;
         currentEulerAngle.z = -Radian / (2 * Mathf.PI) * 360;

@@ -17,6 +17,7 @@ public class PlayerObjectController : EarthObjectController
 
     protected override void OnAttached()
     {
+        Holder.MoveSpeed = 0;
     }
 
     protected override void OnDetached()
@@ -52,5 +53,17 @@ public class PlayerObjectController : EarthObjectController
     {
         float r = x % m;
         return r < 0 ? r + m : r;
+    }
+
+    public override void OnEarthKeyPressed(bool corrected)
+    {
+        if (corrected)
+        {
+            Holder.MoveSpeed = Mathf.Min(Holder.MoveSpeed + 0.2f, Mathf.PI / 2);
+        }
+        else
+        {
+            Holder.MoveSpeed = Mathf.Max(Holder.MoveSpeed - 0.2f, 0);
+        }
     }
 }

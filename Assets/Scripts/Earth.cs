@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Tool;
+using TMPro;
 
 public class Earth : MonoBehaviour
 {
@@ -12,9 +14,25 @@ public class Earth : MonoBehaviour
     [SerializeField]
     private Transform objectSprite;
 
+    [SerializeField]
+    private TextMeshPro keyText;
+
+    public KeyCode CurrentKeyCode { get; private set; }
+
+    private void Awake()
+    {
+        MessageSystem.Instance.Subscribe<SingleKeyPressedEvent>(OnSingleKeyEvent);
+    }
+
     private void Start()
     {
         objectSprite.localScale = Vector3.one * Radius;
+        UpdateKeyCode();
+    }
+
+    private void OnDestroy()
+    {
+        MessageSystem.Instance.Unsubscribe<SingleKeyPressedEvent>(OnSingleKeyEvent);
     }
 
     public void AddEarthObject(EarthObject obj)
@@ -27,5 +45,28 @@ public class Earth : MonoBehaviour
     {
         objects.Remove(obj);
         Destroy(obj);
+    }
+
+    private void OnSingleKeyEvent(IEvent e)
+    {
+        if (!(e is SingleKeyPressedEvent se)) return;
+
+        var isCorrect = se.PressedKey == CurrentKeyCode;
+
+        if (isCorrect)
+        {
+            UpdateKeyCode();
+        }
+
+        foreach (var i in objects)
+        {
+            i.Controller.OnEarthKeyPressed(isCorrect);
+        }
+    }
+
+    private void UpdateKeyCode()
+    {
+        CurrentKeyCode = KeyGenerator.GetKeyCode();
+        keyText.text = CurrentKeyCode.ToString();
     }
 }

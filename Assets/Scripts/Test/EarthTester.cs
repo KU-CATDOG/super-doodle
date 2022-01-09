@@ -38,7 +38,7 @@ namespace Test
             var mob = mobGo.AddComponent<EarthObject>();
             mob.Controller = new MobObjectController();
 
-            mob.MoveSpeed = -15;
+            mob.MoveSpeed = -2;
             mob.Radian = Mathf.PI * 1.5f;
 
             earth.AddEarthObject(mob);
