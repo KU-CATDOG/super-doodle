@@ -16,7 +16,11 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 963fb01c75992ea41a973c980d5b9fbc
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 050daac5648685c4ebda96ba70c66ce2
+    m_Address: Assets/Prefabs/Earth.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8a419681f6152e34781beb4ee8b3a466, type: 2}
   m_SchemaSet:
