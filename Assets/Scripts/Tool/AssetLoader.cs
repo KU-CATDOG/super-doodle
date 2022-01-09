@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -6,7 +7,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace Tool
 {
     /// <summary>
-    /// 로드해 와서 볼일 다 보면 Dispose 해 줘야 메모리 안 샘. using var = 로 스코프 내에서 사용해도 된다.
+    /// 로드해 와서 볼일 다 보면 Dispose 해 줘야 메모리 안 샘.
     /// </summary>
     public class AssetLoader : IDisposable
     {
@@ -15,47 +16,48 @@ namespace Tool
         private AsyncOperationHandle<T> LoadAsset<T>(string address) where T : UnityEngine.Object
         {
             var op = Addressables.LoadAssetAsync<T>(address);
+
             ops.Add(op);
 
             return op;
         }
 
         /// <summary>
-        /// Assets/Prefab/ 아래의 프리팹을 로드한다.
+        /// Assets/ 아래의 애셋을 로드하는 루틴을 리턴한다.
         /// </summary>
-        public void LoadPrefab<T>(string prefabAddress, Action<T> onFinished) where T : UnityEngine.Object
+        public IEnumerator LoadAssetAsync<T>(string prefabAddress, Action<T> onFinished) where T : UnityEngine.Object
         {
-            var op = LoadAsset<T>("Assets/Prefabs/" + prefabAddress);
-            op.Completed += x =>
-            {
-                if (x.Status != AsyncOperationStatus.Succeeded)
-                {
-                    onFinished(null);
-                    return;
-                }
+            var op = LoadAsset<T>("Assets/" + prefabAddress);
 
-                onFinished(x.Result);
-            };
+            yield return op;
+
+            if (op.Status != AsyncOperationStatus.Succeeded)
+            {
+                onFinished(null);
+                yield break;
+            }
+
+            onFinished(op.Result);
         }
 
         /// <summary>
-        /// Assets/Prefab/ 아래의 프리팹을 로드하고 로드가 끝날 때까지 기다린다.
+        /// Assets/ 아래의 애셋을 로드하고 로드가 끝날 때까지 기다린다. (여러 개를 연속으로 로드할 때 쓰면 심각한 퍼포먼스 저하가 있을 수도 있음)
         /// </summary>
-        public void LoadPrefabSync<T>(string prefabAddress, Action<T> onFinished) where T : UnityEngine.Object
+        public static void LoadAsset<T>(string prefabAddress, Action<T> onFinished) where T : UnityEngine.Object
         {
-            var op = LoadAsset<T>("Assets/Prefabs/" + prefabAddress);
-            op.Completed += x =>
-            {
-                if (x.Status != AsyncOperationStatus.Succeeded)
-                {
-                    onFinished(null);
-                    return;
-                }
-
-                onFinished(x.Result);
-            };
+            var op = Addressables.LoadAssetAsync<T>("Assets/" + prefabAddress);
 
             op.WaitForCompletion();
+
+            if (op.Status != AsyncOperationStatus.Succeeded)
+            {
+                onFinished(null);
+                return;
+            }
+
+            onFinished(op.Result);
+
+            Addressables.Release(op);
         }
 
         public void Dispose()

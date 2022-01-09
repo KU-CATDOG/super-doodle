@@ -17,6 +17,12 @@ public class Earth : MonoBehaviour
         objectSprite.localScale = Vector3.one * Radius;
     }
 
+    public void AddEarthObject(EarthObject obj)
+    {
+        obj.transform.parent = transform;
+        objects.Add(obj);
+    }
+
     public void RemoveEarthObject(EarthObject obj)
     {
         objects.Remove(obj);

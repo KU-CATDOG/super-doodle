@@ -8,13 +8,16 @@ namespace Test
     {
         private void Awake()
         {
-            using var loader = new AssetLoader();
-
-            loader.LoadPrefab<GameObject>("Earth.prefab", x =>
+            AssetLoader.LoadAsset<GameObject>("Prefabs/Earth.prefab", x =>
             {
-                var go = Instantiate(x);
-                go.transform.parent = transform;
-                go.transform.localPosition = Vector3.zero;
+                var earth = Instantiate(x);
+                earth.transform.parent = transform;
+                earth.transform.localPosition = Vector3.zero;
+
+                var playerGo = new GameObject();
+                playerGo.transform.parent = earth.transform;
+                var player = playerGo.AddComponent<EarthObject>();
+                player.Controller = new PlayerObjectController();
             });
         }
     }
