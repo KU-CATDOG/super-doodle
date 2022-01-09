@@ -32,8 +32,6 @@ public class PlayerObjectController : EarthObjectController
     {
         if (!(e is SingleKeyPressedEvent se)) return;
 
-        Debug.Log("Attacking with " + se.PressedKey);
-
         foreach (var i in GetEnemyInAttackRange())
         {
             i.OnHitByKey(se.PressedKey);
@@ -48,7 +46,7 @@ public class PlayerObjectController : EarthObjectController
         {
             if (!(i.Controller is IEnemyController enemy)) continue;
 
-            var distanceRadian = (i.Radian % (Mathf.PI * 2)) - (Holder.Radian % (Mathf.PI * 2));
+            var distanceRadian = Mod(i.Radian, Mathf.PI * 2) - Mod(Holder.Radian, Mathf.PI * 2);
 
             if (distanceRadian < 0 || distanceRadian > AttackRangeRadian) continue;
 
@@ -56,5 +54,11 @@ public class PlayerObjectController : EarthObjectController
         }
 
         return result;
+    }
+
+    private float Mod(float x, float m)
+    {
+        float r = x % m;
+        return r < 0 ? r + m : r;
     }
 }

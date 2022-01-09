@@ -15,7 +15,7 @@ namespace Tool
 
     public static class KeyGenerator
     {
-        private static IKeyGenerator keyGenerator = new NullKeyGenerator();
+        private static IKeyGenerator keyGenerator = new RandomKeyGenerator();
 
         public static IReadOnlyCollection<KeyCode> CurrentKeyPool => keyGenerator.KeyPool;
 
