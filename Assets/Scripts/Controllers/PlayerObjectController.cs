@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerObjectController : EarthObjectController
 {
-    private readonly List<IEnemyController> toHitCache = new List<IEnemyController>();
+    private readonly List<EnemyController> toHitCache = new List<EnemyController>();
 
     protected override IEnumerator LoadResources()
     {
@@ -32,18 +32,23 @@ public class PlayerObjectController : EarthObjectController
     {
         foreach (var i in Holder.Earth.EarthObjects)
         {
-            if (!(i.Controller is IEnemyController enemy)) continue;
+            if (!(i.Controller is EnemyController enemy)) continue;
 
+            // 히트박스의 범위
             var distanceRadian = Mod(i.Radian, Mathf.PI * 2) - Mod(Holder.Radian, Mathf.PI * 2);
 
+            // 히트박스 안에 없으면 지워 줘야 함
             if (Mathf.Abs(distanceRadian) > 0.1f) continue;
 
+            // 안에 있으면 때릴 놈 목록에 추가함
             toHitCache.Add(enemy);
         }
 
+        var now = Time.time;
+
         foreach (var i in toHitCache)
         {
-            i.OnHit();
+            i.AttackThis();
         }
 
         toHitCache.Clear();

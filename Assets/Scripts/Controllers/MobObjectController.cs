@@ -1,10 +1,11 @@
 using System.Collections;
 using Tool;
 using UnityEngine;
-using TMPro;
 
-public class MobObjectController : EarthObjectController, IEnemyController
+public class MobObjectController : EnemyController
 {
+    protected override float InvincibleSecond => 0;
+
     protected override IEnumerator LoadResources()
     {
         yield return AssetLoader.LoadAssetAsync<GameObject>("Prefabs/EarthObjects/Mob.prefab", x =>
@@ -25,9 +26,9 @@ public class MobObjectController : EarthObjectController, IEnemyController
     {
     }
 
-    public void OnHit()
+    protected override void OnHit()
     {
-        // 제대로 된 키에 맞으면 죽는다.
+        // 한대 맞으면 바로 죽음
         Holder.Earth.KillEarthObject(Holder);
     }
 }
