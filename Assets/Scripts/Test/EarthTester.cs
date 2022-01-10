@@ -36,9 +36,8 @@ namespace Test
             var mobGo = new GameObject();
             mobGo.transform.parent = earth.transform;
             var mob = mobGo.AddComponent<EarthObject>();
-            mob.Controller = new MobObjectController();
+            mob.Controller = new BossSlimeObjectController();
 
-            mob.MoveSpeed = -2;
             mob.Radian = Mathf.PI * 1.5f;
 
             earth.AddEarthObject(mob);
