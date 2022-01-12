@@ -1,6 +1,5 @@
-using System;
-using UnityEngine;
 using Tool;
+using UnityEngine;
 
 public class Game : MonoBehaviour
 {

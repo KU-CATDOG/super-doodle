@@ -1,11 +1,36 @@
 using System.Collections;
 using UnityEngine;
 
+public enum ObjectSide
+{
+    Player,
+    Enemy,
+}
+
 public abstract class EarthObjectController
 {
     public EarthObject Holder { get; private set; }
 
     public bool IsResourceLoaded { get; private set; }
+
+    public abstract ObjectSide Side { get; }
+
+    /// <summary>
+    /// 공격이 가능한 상태여도 한 대 맞아서 무적 시간인 도중에는 다른 오브젝트를 때릴 수 없음
+    /// </summary>
+    public bool CanAttackOtherObject => AttackEnabled && Time.time - recentHitTime > InvincibleSecond;
+
+    protected abstract bool AttackEnabled { get; }
+
+    /// <summary>
+    /// 한대 맞고 몇 초동안 무적인지
+    /// </summary>
+    protected abstract float InvincibleSecond { get; }
+
+    /// <summary>
+    /// 가장 최근에 맞은 게 언제인지
+    /// </summary>
+    private float recentHitTime = float.MinValue;
 
     protected GameObject resource;
 
@@ -63,4 +88,16 @@ public abstract class EarthObjectController
     public virtual void OnEarthKeyPressed(bool corrected)
     {
     }
+
+    public void MeleeAttackThis(EarthObject hitter)
+    {
+        var now = Time.time;
+
+        if (now - recentHitTime < InvincibleSecond) return;
+
+        recentHitTime = Time.time;
+        OnMeleeHit(hitter);
+    }
+
+    protected abstract void OnMeleeHit(EarthObject hitter);
 }

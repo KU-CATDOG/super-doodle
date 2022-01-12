@@ -1,11 +1,17 @@
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using Tool;
 using UnityEngine;
 
 public class PlayerObjectController : EarthObjectController
 {
-    private readonly List<EnemyController> toHitCache = new List<EnemyController>();
+    private readonly List<EarthObject> toHitCache = new List<EarthObject>();
+
+    public override ObjectSide Side => ObjectSide.Player;
+
+    protected override bool AttackEnabled => true;
+
+    protected override float InvincibleSecond => 3;
 
     protected override IEnumerator LoadResources()
     {
@@ -30,28 +36,6 @@ public class PlayerObjectController : EarthObjectController
 
     public override void OnUpdate()
     {
-        foreach (var i in Holder.Earth.EarthObjects)
-        {
-            if (!(i.Controller is EnemyController enemy)) continue;
-
-            // 히트박스의 범위
-            var distanceRadian = Mod(i.Radian, Mathf.PI * 2) - Mod(Holder.Radian, Mathf.PI * 2);
-
-            // 히트박스 안에 없으면 지워 줘야 함
-            if (Mathf.Abs(distanceRadian) > 0.1f) continue;
-
-            // 안에 있으면 때릴 놈 목록에 추가함
-            toHitCache.Add(enemy);
-        }
-
-        var now = Time.time;
-
-        foreach (var i in toHitCache)
-        {
-            i.AttackThis();
-        }
-
-        toHitCache.Clear();
     }
 
     private float Mod(float x, float m)
@@ -70,5 +54,10 @@ public class PlayerObjectController : EarthObjectController
         {
             Holder.MoveSpeed = Mathf.Max(Holder.MoveSpeed - 0.2f, 0);
         }
+    }
+
+    protected override void OnMeleeHit(EarthObject hitter)
+    {
+        Debug.Log("Player Hit!");
     }
 }

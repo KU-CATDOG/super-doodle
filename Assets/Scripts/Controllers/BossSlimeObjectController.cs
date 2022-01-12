@@ -1,12 +1,16 @@
 using System.Collections;
-using UnityEngine;
 using Tool;
+using UnityEngine;
 
-public class BossSlimeObjectController : EnemyController
+public class BossSlimeObjectController : EarthObjectController
 {
     private int hitCount;
 
     protected override float InvincibleSecond => 3;
+
+    public override ObjectSide Side => ObjectSide.Enemy;
+
+    protected override bool AttackEnabled => true;
 
     protected override IEnumerator LoadResources()
     {
@@ -30,7 +34,7 @@ public class BossSlimeObjectController : EnemyController
     {
     }
 
-    protected override void OnHit()
+    protected override void OnMeleeHit(EarthObject hitter)
     {
         // 한대 맞으면 버티고 더 빨라짐
         if (hitCount == 0)

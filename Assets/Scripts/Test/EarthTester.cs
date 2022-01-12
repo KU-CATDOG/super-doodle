@@ -31,7 +31,7 @@ namespace Test
 
             if (now - lastTimeAdded <= 1f) return;
 
-            if (earth.EarthObjects.Count > 10) return;
+            if (earth.EarthObjects.Count > 1) return;
 
             var mobGo = new GameObject();
             mobGo.transform.parent = earth.transform;

@@ -2,9 +2,13 @@ using System.Collections;
 using Tool;
 using UnityEngine;
 
-public class MobObjectController : EnemyController
+public class MobObjectController : EarthObjectController
 {
     protected override float InvincibleSecond => 0;
+
+    public override ObjectSide Side => ObjectSide.Enemy;
+
+    protected override bool AttackEnabled => false;
 
     protected override IEnumerator LoadResources()
     {
@@ -26,7 +30,7 @@ public class MobObjectController : EnemyController
     {
     }
 
-    protected override void OnHit()
+    protected override void OnMeleeHit(EarthObject hitter)
     {
         // 한대 맞으면 바로 죽음
         Holder.Earth.KillEarthObject(Holder);
