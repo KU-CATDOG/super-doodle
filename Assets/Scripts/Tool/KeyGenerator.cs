@@ -40,10 +40,6 @@ namespace Tool
 
     public class NullKeyGenerator : IKeyGenerator
     {
-        private static readonly List<KeyCode> pool = new List<KeyCode> { KeyCode.A };
-
-        public IReadOnlyCollection<KeyCode> KeyPool => pool;
-
         public KeyCode GetKeyCode() => KeyCode.A;
     }
 

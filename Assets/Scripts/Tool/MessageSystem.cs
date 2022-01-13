@@ -30,7 +30,7 @@ namespace Tool
         private readonly Dictionary<Type, HashSet<Action<IEvent>>> callbacks = new Dictionary<Type, HashSet<Action<IEvent>>>();
         private readonly HashSet<IEvent> publishedThisFrame = new HashSet<IEvent>();
 
-        private bool isCurrentlyHandlingEvent = false;
+        private bool isCurrentlyHandlingEvent;
 
         // Update()에서 콜백들에 foreach를 도는 중에 내부에서 구독/취소 요청이 들어오면 Enumerator가 깨져 버릴 수 있으므로
         // 이벤트를 처리하는 도중에는 여기 모아 뒀다가 끝나고 일괄적으로 넣는다.

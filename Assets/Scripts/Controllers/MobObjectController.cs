@@ -2,37 +2,40 @@ using System.Collections;
 using Tool;
 using UnityEngine;
 
-public class MobObjectController : EarthObjectController
+namespace Controllers
 {
-    protected override float InvincibleSecond => 0;
-
-    public override ObjectSide Side => ObjectSide.Enemy;
-
-    protected override bool AttackEnabled => false;
-
-    protected override IEnumerator LoadResources()
+    public class MobObjectController : EarthObjectController
     {
-        yield return AssetLoader.LoadAssetAsync<GameObject>("Prefabs/EarthObjects/Mob.prefab", x =>
+        protected override float InvincibleSecond => 0;
+
+        public override ObjectSide Side => ObjectSide.Enemy;
+
+        protected override bool AttackEnabled => false;
+
+        protected override IEnumerator LoadResources()
         {
-            resource = Object.Instantiate(x.Resource);
-        });
-    }
+            yield return AssetLoader.LoadAssetAsync<GameObject>("Prefabs/EarthObjects/Mob.prefab", x =>
+            {
+                resource = Object.Instantiate(x.Resource);
+            });
+        }
 
-    protected override void OnAttached()
-    {
-    }
+        protected override void OnAttached()
+        {
+        }
 
-    protected override void OnDetached()
-    {
-    }
+        protected override void OnDetached()
+        {
+        }
 
-    protected override void UnloadResources()
-    {
-    }
+        protected override void UnloadResources()
+        {
+        }
 
-    protected override void OnMeleeHit(EarthObject hitter)
-    {
-        // 한대 맞으면 바로 죽음
-        Holder.Earth.KillEarthObject(Holder);
+        protected override void OnMeleeHit(EarthObject hitter)
+        {
+            // 한대 맞으면 바로 죽음
+            Holder.Earth.KillEarthObject(Holder);
+        }
     }
 }
