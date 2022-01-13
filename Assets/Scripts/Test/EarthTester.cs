@@ -12,9 +12,9 @@ namespace Test
 
         private void Awake()
         {
-            var loadedAsset = AssetLoader.LoadAsset<GameObject>("Prefabs/Earth.prefab");
+            var loadedPrefab = AssetLoader.LoadPrefab<GameObject>("Earth");
 
-            earth = Instantiate(loadedAsset.Resource).GetComponent<Earth>();
+            earth = Instantiate(loadedPrefab).GetComponent<Earth>();
             var t = earth.transform;
 
             t.parent = transform;

@@ -37,16 +37,9 @@ public sealed class EarthObject : MonoBehaviour
         get => controller;
         set
         {
-            if (controller != null)
-            {
-                controller.DetachThis();
-            }
+            controller?.DetachThis();
             controller = value;
-
-            if (controller != null)
-            {
-                controller.AttachThis(this);
-            }
+            controller?.AttachThis(this);
         }
     }
 
@@ -57,10 +50,9 @@ public sealed class EarthObject : MonoBehaviour
 
     private void Update()
     {
-        if (controller == null) return;
+        if (!(controller is { IsResourceLoaded: true })) return;
 
         // 관련 리소스가 로드되지 않은 상태에선 행동을 멈춘다.
-        if (!controller.IsResourceLoaded) return;
 
         SetPosition();
         TryAttack();
@@ -88,9 +80,11 @@ public sealed class EarthObject : MonoBehaviour
         // 모든 오브젝트 공통으로 위치와 속도에 따라 움직이게 한다.
         Radian += MoveSpeed * Time.deltaTime;
 
-        var currentEulerAngle = transform.localEulerAngles;
+        var t = transform;
+
+        var currentEulerAngle = t.localEulerAngles;
         currentEulerAngle.z = -Radian / (2 * Mathf.PI) * 360;
-        transform.localEulerAngles = currentEulerAngle;
+        t.localEulerAngles = currentEulerAngle;
     }
 
     private void OnDestroy()
