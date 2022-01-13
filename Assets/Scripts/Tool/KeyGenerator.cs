@@ -8,16 +8,32 @@ namespace Tool
         /// <summary>
         /// 이 제너레이터에서 나올 수 있는 키들의 집합
         /// </summary>
-        public IReadOnlyCollection<KeyCode> KeyPool { get; }
 
         public KeyCode GetKeyCode();
     }
 
     public static class KeyGenerator
     {
-        private static IKeyGenerator keyGenerator = new RandomKeyGenerator();
+        public static IReadOnlyList<KeyCode> AllKeyPool { get; }
 
-        public static IReadOnlyCollection<KeyCode> CurrentKeyPool => keyGenerator.KeyPool;
+        static KeyGenerator()
+        {
+            var pool = new List<KeyCode>();
+
+            for (var i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
+            {
+                pool.Add(i);
+            }
+
+            for (var i = KeyCode.A; i <= KeyCode.Z; i++)
+            {
+                pool.Add(i);
+            }
+
+            AllKeyPool = pool;
+        }
+
+        private static IKeyGenerator keyGenerator = new RandomKeyGenerator();
 
         public static KeyCode GetKeyCode() => keyGenerator.GetKeyCode();
     }
@@ -33,23 +49,6 @@ namespace Tool
 
     public class RandomKeyGenerator : IKeyGenerator
     {
-        private readonly List<KeyCode> pool = new List<KeyCode>();
-
-        public RandomKeyGenerator()
-        {
-            for (var i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
-            {
-                pool.Add(i);
-            }
-
-            for (var i = KeyCode.A; i <= KeyCode.Z; i++)
-            {
-                pool.Add(i);
-            }
-        }
-
-        public IReadOnlyCollection<KeyCode> KeyPool => pool;
-
-        public KeyCode GetKeyCode() => pool[Random.Range(0, pool.Count)];
+        public KeyCode GetKeyCode() => KeyGenerator.AllKeyPool[Random.Range(0, KeyGenerator.AllKeyPool.Count)];
     }
 }

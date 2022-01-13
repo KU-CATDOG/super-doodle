@@ -66,7 +66,8 @@ namespace Tool
 
             var now = Time.time;
 
-            foreach (var candidate in KeyGenerator.CurrentKeyPool)
+            // 등장하는 키 중에서만 확인을 한다.
+            foreach (var candidate in KeyGenerator.AllKeyPool)
             {
                 if (Input.GetKeyDown(candidate))
                 {
