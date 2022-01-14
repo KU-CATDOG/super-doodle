@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
-    public Text tutorialText;
+    [SerializeField]
+    private Text tutorialText;
     private float timer;
     private int timeToChange;
     private int counter;
