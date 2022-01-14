@@ -36,7 +36,7 @@ namespace Controllers
         protected override void OnMeleeHit(EarthObject hitter)
         {
             // 한대 맞으면 바로 죽음
-            Object.Destroy(Holder);
+            Object.Destroy(Holder.gameObject);
         }
     }
 }

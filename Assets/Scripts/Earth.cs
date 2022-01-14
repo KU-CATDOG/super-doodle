@@ -20,7 +20,7 @@ public class Earth : MonoBehaviour
     /// <summary>
     /// 크기 (보여주기 용도)
     /// </summary>
-    public int Radius { get; private set; } = 5;
+    public float Radius { get; private set; } = 2f;
 
     [SerializeField]
     private Transform objectSprite;
@@ -47,7 +47,7 @@ public class Earth : MonoBehaviour
 
     private void Start()
     {
-        objectSprite.localScale = Vector3.one * Radius;
+        objectSprite.localScale = Vector3.one * Radius * 2;
         UpdateKeyCode();
     }
 

@@ -47,7 +47,7 @@ namespace Controllers
             }
             else
             {
-                Object.Destroy(Holder);
+                Object.Destroy(Holder.gameObject);
             }
         }
     }

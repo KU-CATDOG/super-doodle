@@ -34,6 +34,11 @@ public abstract class EarthObjectController
 
     protected GameObject resource;
 
+    /// <summary>
+    /// 지구를 돌고 있는 물체의 월드 포지션
+    /// </summary>
+    public Vector3 ResourceWorldPos => resource.transform.position;
+
     public void AttachThis(EarthObject earthObject)
     {
         Holder = earthObject;
@@ -73,7 +78,7 @@ public abstract class EarthObjectController
         t.parent = Holder.transform;
 
         // 오브젝트는 중앙에 있지만 스프라이트 등 눈에 보이는 놈들은 지구 위에서 도는 모습으로 보여야 함
-        t.localPosition = new Vector3(0, Holder.Earth.Radius / 2f + 1, 0);
+        t.localPosition = new Vector3(0, Holder.Earth.Radius + 1, 0);
 
         IsResourceLoaded = true;
     }
