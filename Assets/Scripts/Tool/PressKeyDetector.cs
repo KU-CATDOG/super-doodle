@@ -45,11 +45,13 @@ namespace Tool
 
     public class PressKeyDetector : MonoBehaviour
     {
+        // 여기 있는 키들만 입력으로 탐지한다.
+        private static readonly List<KeyCode> KeyPool = new List<KeyCode>();
+
         // 한번 누른 키가 몇 초동안 살아있도록 할지 (동시에 다른 키를 여럿 누를 때 용이하도록)
         private const float KeyPressLifetime = 0.15f;
 
         private readonly Dictionary<KeyCode, KeyPressInfo> pressedKey = new Dictionary<KeyCode, KeyPressInfo>();
-        private readonly List<KeyCode> toRemove = new List<KeyCode>();
 
         public static void Init()
         {
@@ -58,7 +60,21 @@ namespace Tool
 
             go.name = "PressKeyDetector";
             go.AddComponent<PressKeyDetector>();
+
+            for (var i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
+            {
+                KeyPool.Add(i);
+            }
+
+            for (var i = KeyCode.A; i <= KeyCode.Z; i++)
+            {
+                KeyPool.Add(i);
+            }
+
+            KeyPool.Add(KeyCode.Space);
         }
+
+        private readonly List<KeyCode> toRemove = new List<KeyCode>();
 
         private void Update()
         {
@@ -67,7 +83,7 @@ namespace Tool
             var now = Time.time;
 
             // 등장하는 키 중에서만 확인을 한다.
-            foreach (var candidate in KeyGenerator.AllKeyPool)
+            foreach (var candidate in KeyPool)
             {
                 if (Input.GetKeyDown(candidate))
                 {

@@ -10,6 +10,7 @@ namespace Controllers
 
         public override ObjectSide Side => ObjectSide.Enemy;
 
+        // 잡몹은 공격이 불가능하다.
         protected override bool AttackEnabled => false;
 
         protected override IEnumerator LoadResources()

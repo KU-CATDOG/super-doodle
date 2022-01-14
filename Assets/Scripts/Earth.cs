@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Controllers;
 using TMPro;
 using Tool;
 using UnityEngine;
@@ -10,6 +11,10 @@ public class Earth : MonoBehaviour
     private readonly Dictionary<string, HashSet<EarthObject>> objects = new Dictionary<string, HashSet<EarthObject>>();
 
     public int ObjectCount => objects.Sum(x => x.Value.Count);
+
+    public EarthObject Player => objects.TryGetValue(nameof(PlayerObjectController), out var set)
+        ? set.FirstOrDefault()
+        : null;
 
     /// <summary>
     /// 크기 (보여주기 용도)
@@ -22,7 +27,7 @@ public class Earth : MonoBehaviour
     [SerializeField]
     private TextMeshPro keyText;
 
-    public KeyCode CurrentKeyCode { get; private set; }
+    private (KeyCode key, IReadOnlyCollection<KeyCode> pool) currentKey;
 
     // 충돌 탐지를 위해서 이 땅을 몇 구획으로 쪼갤 것인가
     private const int CollisionSystemDivisionNum = 12;
@@ -99,7 +104,9 @@ public class Earth : MonoBehaviour
     {
         if (!(e is SingleKeyPressedEvent se)) return;
 
-        var isCorrect = se.PressedKey == CurrentKeyCode;
+        if (!currentKey.pool.Contains(se.PressedKey)) return;
+
+        var isCorrect = se.PressedKey == currentKey.key;
 
         if (isCorrect)
         {
@@ -115,8 +122,10 @@ public class Earth : MonoBehaviour
     // 새로운 키로 갱신한다.
     private void UpdateKeyCode()
     {
-        CurrentKeyCode = KeyGenerator.GetKeyCode();
-        keyText.text = CurrentKeyCode.ToString();
+        var gen = EarthKeyGenerator.KeyGenerator;
+
+        currentKey = (gen.GetKeyCode(), gen.CandidatePool);
+        keyText.text = currentKey.key.ToString();
     }
 
     private void UpdateCollisionInfo()
