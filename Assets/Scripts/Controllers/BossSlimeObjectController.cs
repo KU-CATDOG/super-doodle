@@ -47,7 +47,7 @@ namespace Controllers
             }
             else
             {
-                Holder.Earth.KillEarthObject(Holder);
+                Object.Destroy(Holder);
             }
         }
     }

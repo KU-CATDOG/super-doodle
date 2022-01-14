@@ -30,8 +30,6 @@ namespace Test
 
             var player = playerGo.AddComponent<EarthObject>();
             player.Controller = new PlayerObjectController();
-
-            earth.AddEarthObject(player);
         }
 
         private void Update()
@@ -40,7 +38,7 @@ namespace Test
 
             if (now - lastTimeAdded <= 1f) return;
 
-            if (earth.EarthObjects.Count > 1) return;
+            if (earth.ObjectCount > 1) return;
 
             var mobGo = new GameObject
             {
@@ -52,10 +50,7 @@ namespace Test
 
             var mob = mobGo.AddComponent<EarthObject>();
             mob.Controller = new BossSlimeObjectController();
-
             mob.Radian = Mathf.PI * 1.5f;
-
-            earth.AddEarthObject(mob);
 
             lastTimeAdded = now;
         }

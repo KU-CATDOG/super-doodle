@@ -1,17 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
-
-public enum EarthObjectType
-{
-    Player,
-    Mob,
-    Boss,
-}
 
 public sealed class EarthObject : MonoBehaviour
 {
-    private readonly List<EarthObject> toHitCache = new List<EarthObject>();
-
     /// <summary>
     /// 각으로 표현된 위치 (2pi보다 커질 수 있음에 주의! 진짜 각도로 쓰고 싶으면 % 2pi 해야 함)
     /// </summary>
@@ -60,6 +50,11 @@ public sealed class EarthObject : MonoBehaviour
         controller.OnUpdate();
     }
 
+    private void OnDestroy()
+    {
+        Controller = null;
+    }
+
     private void TryAttack()
     {
         // 다른 오브젝트를 못 때리는 상태라면
@@ -75,7 +70,7 @@ public sealed class EarthObject : MonoBehaviour
         }
     }
 
-    public void SetPosition()
+    private void SetPosition()
     {
         // 모든 오브젝트 공통으로 위치와 속도에 따라 움직이게 한다.
         Radian += MoveSpeed * Time.deltaTime;
@@ -87,14 +82,9 @@ public sealed class EarthObject : MonoBehaviour
         t.localEulerAngles = currentEulerAngle;
     }
 
-    private void OnDestroy()
-    {
-        Controller = null;
-    }
-
     private float Mod(float x, float m)
     {
-        float r = x % m;
+        var r = x % m;
         return r < 0 ? r + m : r;
     }
 }

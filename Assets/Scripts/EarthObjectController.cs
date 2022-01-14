@@ -37,6 +37,7 @@ public abstract class EarthObjectController
     public void AttachThis(EarthObject earthObject)
     {
         Holder = earthObject;
+        Holder.Earth.RegisterEarthObjectController(this);
 
         OnAttached();
         Holder.StartCoroutine(Load());
@@ -44,6 +45,8 @@ public abstract class EarthObjectController
 
     public void DetachThis()
     {
+        Holder.Earth.UnregisterEarthObjectController(this);
+
         OnDetached();
         UnloadResources();
 

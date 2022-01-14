@@ -1,16 +1,15 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Tool;
 using UnityEngine;
 
 public class Earth : MonoBehaviour
 {
-    private readonly HashSet<EarthObject> objects = new HashSet<EarthObject>();
+    // 타입명과 그 타입의 오브젝트들 딕셔너리
+    private readonly Dictionary<string, HashSet<EarthObject>> objects = new Dictionary<string, HashSet<EarthObject>>();
 
-    /// <summary>
-    /// 이 땅 위에 올라와 있는 모든 오브젝트
-    /// </summary>
-    public IReadOnlyCollection<EarthObject> EarthObjects => objects;
+    public int ObjectCount => objects.Sum(x => x.Value.Count);
 
     /// <summary>
     /// 크기 (보여주기 용도)
@@ -26,9 +25,9 @@ public class Earth : MonoBehaviour
     public KeyCode CurrentKeyCode { get; private set; }
 
     // 충돌 탐지를 위해서 이 땅을 몇 구획으로 쪼갤 것인가
-    private const int collisionSystemDivisionNum = 12;
+    private const int CollisionSystemDivisionNum = 12;
 
-    private readonly HashSet<EarthObject>[] collisionInfo = new HashSet<EarthObject>[collisionSystemDivisionNum];
+    private readonly HashSet<EarthObject>[] collisionInfo = new HashSet<EarthObject>[CollisionSystemDivisionNum];
 
     private void Awake()
     {
@@ -56,18 +55,42 @@ public class Earth : MonoBehaviour
         MessageSystem.Instance.Unsubscribe<SingleKeyPressedEvent>(OnSingleKeyEvent);
     }
 
-    public void AddEarthObject(EarthObject obj)
+    public void RegisterEarthObjectController(EarthObjectController c)
     {
-        obj.transform.parent = transform;
-        objects.Add(obj);
+        var holder = c.Holder;
+
+        holder.transform.parent = transform;
+        var typeName = c.GetType().ToString();
+
+        if (!objects.TryGetValue(typeName, out var s))
+        {
+            s = new HashSet<EarthObject>();
+            objects[typeName] = s;
+        }
+
+        s.Add(holder);
 
         UpdateCollisionInfo();
     }
 
-    public void KillEarthObject(EarthObject obj)
+    public void UnregisterEarthObjectController(EarthObjectController c)
     {
-        objects.Remove(obj);
-        Destroy(obj);
+        var holder = c.Holder;
+
+        holder.transform.parent = transform;
+        var typeName = c.GetType().ToString();
+
+        if (!objects.TryGetValue(typeName, out var s))
+        {
+            return;
+        }
+
+        s.Remove(holder);
+
+        if (s.Count == 0)
+        {
+            objects.Remove(typeName);
+        }
 
         UpdateCollisionInfo();
     }
@@ -83,7 +106,7 @@ public class Earth : MonoBehaviour
             UpdateKeyCode();
         }
 
-        foreach (var i in objects)
+        foreach (var i in objects.SelectMany(kv => kv.Value))
         {
             i.Controller.OnEarthKeyPressed(isCorrect);
         }
@@ -103,10 +126,10 @@ public class Earth : MonoBehaviour
             i.Clear();
         }
 
-        foreach (var i in objects)
+        foreach (var i in objects.SelectMany(kv => kv.Value))
         {
             // 현재 오브젝트의 위치에 따라 인덱스를 정한다.
-            collisionInfo[(int)(i.ClampedRadian / (Mathf.PI / (collisionSystemDivisionNum / 2)))].Add(i);
+            collisionInfo[(int)(i.ClampedRadian / (Mathf.PI / (CollisionSystemDivisionNum / 2f)))].Add(i);
         }
     }
 
@@ -121,8 +144,8 @@ public class Earth : MonoBehaviour
         radius = Mathf.Clamp(radius, 0, Mathf.PI / 2 - 0.01f);
 
         // 구획 탐색의 시작점과 끝 점을 구한다.
-        var start = (int)Mathf.Floor((radian - radius) / (Mathf.PI / (collisionSystemDivisionNum / 2)));
-        var end = (int)Mathf.Floor((radian + radius) / (Mathf.PI / (collisionSystemDivisionNum / 2)));
+        var start = (int)Mathf.Floor((radian - radius) / (Mathf.PI / (CollisionSystemDivisionNum / 2f)));
+        var end = (int)Mathf.Floor((radian + radius) / (Mathf.PI / (CollisionSystemDivisionNum / 2f)));
 
         for (var idx = start; idx <= end; idx++)
         {
@@ -133,12 +156,12 @@ public class Earth : MonoBehaviour
             // 무조건 0 ~ num 사이로 맞춰야 한다.
             if (i < 0)
             {
-                i += collisionSystemDivisionNum;
+                i += CollisionSystemDivisionNum;
             }
 
             if (i > 11)
             {
-                i -= collisionSystemDivisionNum;
+                i -= CollisionSystemDivisionNum;
             }
 
             // 끝자락에 있는 놈들은 안쪽에서 거리를 재서 나눈다.
@@ -167,7 +190,7 @@ public class Earth : MonoBehaviour
 
     private float Mod(float x, float m)
     {
-        float r = x % m;
+        var r = x % m;
         return r < 0 ? r + m : r;
     }
 }
