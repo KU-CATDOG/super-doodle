@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class EarthObject : MonoBehaviour
@@ -38,6 +39,9 @@ public sealed class EarthObject : MonoBehaviour
             controller?.AttachThis(this);
         }
     }
+
+    // 간단하게 값 저장용으로 사용할 딕셔너리
+    private readonly Dictionary<string, object> valueStorage = new Dictionary<string, object>();
 
     private void Awake()
     {
@@ -99,4 +103,15 @@ public sealed class EarthObject : MonoBehaviour
         var r = x % m;
         return r < 0 ? r + m : r;
     }
+
+    /// <summary>
+    /// 이 오브젝트에 임의의 값을 저장한다.
+    /// </summary>
+    public void SetValue(string key, object value) => valueStorage[key] = value;
+
+    /// <summary>
+    /// 이 오브젝트에 저장된 값을 읽는다.
+    /// </summary>
+    public T GetValue<T>(string key, T defaultValue = default) =>
+        valueStorage.TryGetValue(key, out var result) ? (T)result : defaultValue;
 }

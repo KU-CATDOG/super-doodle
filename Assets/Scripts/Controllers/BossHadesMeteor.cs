@@ -7,6 +7,8 @@ namespace Controllers
     {
         private static readonly HashSet<BossHadesMeteor> allMeteor = new HashSet<BossHadesMeteor>();
 
+        private const int MaxHit = 3;
+
         public static void DestroyAll()
         {
             foreach (var i in allMeteor)
@@ -56,6 +58,18 @@ namespace Controllers
                 CollisionDistance * CollisionDistance) return;
 
             Debug.Log("Player hit by meteor!");
+
+            var hitCount = targetPlayer.GetValue<int>("meteor_hitcount");
+
+            if (hitCount < MaxHit - 1)
+            {
+                // 운석에 맞은 횟수를 플레이어 오브젝트에 저장한다.
+                targetPlayer.SetValue("meteor_hitcount", hitCount + 1);
+            }
+            else
+            {
+                Destroy(targetPlayer.gameObject);
+            }
 
             allMeteor.Remove(this);
             Destroy(gameObject);
