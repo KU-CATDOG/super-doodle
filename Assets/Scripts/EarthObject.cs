@@ -7,6 +7,9 @@ public sealed class EarthObject : MonoBehaviour
     /// </summary>
     public float Radian { get; set; }
 
+    /// <summary>
+    /// 0 ~ 2pi 사이로 표현된 위치
+    /// </summary>
     public float ClampedRadian => Mod(Radian, Mathf.PI * 2);
 
     /// <summary>
@@ -15,6 +18,9 @@ public sealed class EarthObject : MonoBehaviour
     /// </summary>
     public float MoveSpeed { get; set; }
 
+    /// <summary>
+    /// 이 오브젝트가 올라가 있는 땅
+    /// </summary>
     public Earth Earth { get; private set; }
 
     private EarthObjectController controller;
@@ -64,9 +70,15 @@ public sealed class EarthObject : MonoBehaviour
 
         foreach (var target in Earth.ProbeEarthObject(Radian + attackRange / 2, attackRange))
         {
+            var c = target.controller;
+
             // 같은 편은 안 때린다.
-            if (target.Controller.Side == controller.Side) continue;
-            target.Controller.MeleeAttackThis(this);
+            if (c.Side == controller.Side) continue;
+
+            // 전부 로딩되지 않은 경우에도 넘어간다.
+            if (!c.IsResourceLoaded) continue;
+
+            c.MeleeAttackThis(this);
         }
     }
 
