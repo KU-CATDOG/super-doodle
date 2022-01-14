@@ -8,6 +8,7 @@ public class TutorialManager : MonoBehaviour
 {
     [SerializeField]
     private Text tutorialText;
+
     private float timer;
     private int timeToChange;
     private int counter;
@@ -32,7 +33,7 @@ public class TutorialManager : MonoBehaviour
     {
         // 시간에 따라 튜토리얼 텍스트가 변화하게 해야 함.
         timer += Time.deltaTime;
-
+        
         if (counter < 4 && timer > timeToChange)
         {
             tutorialText.text = texts[counter];
