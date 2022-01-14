@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Controllers;
@@ -8,11 +9,11 @@ using UnityEngine;
 public class Earth : MonoBehaviour
 {
     // 타입명과 그 타입의 오브젝트들 딕셔너리
-    private readonly Dictionary<string, HashSet<EarthObject>> objects = new Dictionary<string, HashSet<EarthObject>>();
+    private readonly Dictionary<Type, HashSet<EarthObject>> objects = new Dictionary<Type, HashSet<EarthObject>>();
 
     public int ObjectCount => objects.Sum(x => x.Value.Count);
 
-    public EarthObject Player => objects.TryGetValue(nameof(PlayerObjectController), out var set)
+    public EarthObject Player => objects.TryGetValue(typeof(PlayerObjectController), out var set)
         ? set.FirstOrDefault()
         : null;
 
@@ -65,12 +66,12 @@ public class Earth : MonoBehaviour
         var holder = c.Holder;
 
         holder.transform.parent = transform;
-        var typeName = c.GetType().ToString();
+        var type = c.GetType();
 
-        if (!objects.TryGetValue(typeName, out var s))
+        if (!objects.TryGetValue(type, out var s))
         {
             s = new HashSet<EarthObject>();
-            objects[typeName] = s;
+            objects[type] = s;
         }
 
         s.Add(holder);
@@ -83,9 +84,9 @@ public class Earth : MonoBehaviour
         var holder = c.Holder;
 
         holder.transform.parent = transform;
-        var typeName = c.GetType().ToString();
+        var type = c.GetType();
 
-        if (!objects.TryGetValue(typeName, out var s))
+        if (!objects.TryGetValue(type, out var s))
         {
             return;
         }
@@ -94,7 +95,7 @@ public class Earth : MonoBehaviour
 
         if (s.Count == 0)
         {
-            objects.Remove(typeName);
+            objects.Remove(type);
         }
 
         UpdateCollisionInfo();
