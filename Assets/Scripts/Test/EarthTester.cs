@@ -10,6 +10,8 @@ namespace Test
 
         private float lastTimeAdded;
 
+        private SpeedBar speedBar;
+
         private void Awake()
         {
             var loadedPrefab = AssetLoader.LoadPrefab<GameObject>("Earth");
@@ -30,6 +32,11 @@ namespace Test
 
             var player = playerGo.AddComponent<EarthObject>();
             player.Controller = new PlayerObjectController();
+
+            var speedBarPrefab = AssetLoader.LoadPrefab<GameObject>("SpeedBar");
+            speedBar = Instantiate(speedBarPrefab).GetComponent<SpeedBar>();
+            speedBar.Initialize();
+
         }
 
         private void Update()
@@ -49,7 +56,7 @@ namespace Test
             };
 
             var mob = mobGo.AddComponent<EarthObject>();
-            mob.Controller = new BossHadesObjectController();
+            mob.Controller = new BossSlimeObjectController();
             mob.Radian = Mathf.PI * 1.5f;
 
             lastTimeAdded = now;
