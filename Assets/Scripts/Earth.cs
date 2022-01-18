@@ -25,10 +25,17 @@ public class Earth : MonoBehaviour
     [SerializeField]
     private Transform objectSprite;
 
+    private int keyUpdateCount = 0;
+
+    private KeyCode keyCache;
+
     [SerializeField]
     private TextMeshPro keyText;
+    [SerializeField]
+    private TextMeshPro nextKeyText;
 
     private (KeyCode key, IReadOnlyCollection<KeyCode> pool) currentKey;
+    private (KeyCode key, IReadOnlyCollection<KeyCode> pool) nextKey;
 
     // 충돌 탐지를 위해서 이 땅을 몇 구획으로 쪼갤 것인가
     private const int CollisionSystemDivisionNum = 12;
@@ -125,8 +132,22 @@ public class Earth : MonoBehaviour
     {
         var gen = EarthKeyGenerator.KeyGenerator;
 
-        currentKey = (gen.GetKeyCode(), gen.CandidatePool);
+        // 첫 번째 갱신
+        if (++keyUpdateCount == 1)
+        {
+            currentKey = (gen.GetKeyCode(), gen.CandidatePool);
+        }
+        // 그 이후 갱신
+        else
+        {
+            currentKey = (keyCache, gen.CandidatePool);
+        }
+
         keyText.text = currentKey.key.ToString();
+
+        keyCache = gen.GetKeyCode();
+        nextKey = (keyCache, gen.CandidatePool);
+        nextKeyText.text = nextKey.key.ToString();
     }
 
     private void UpdateCollisionInfo()
