@@ -1,6 +1,8 @@
 using System.Collections;
 using Tool;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 namespace Controllers
 {
@@ -47,7 +49,9 @@ namespace Controllers
             }
             else
             {
+                // 승리했으므로 오브젝트 모두 파괴하고 게임 결과창 씬으로 이동시키기
                 Object.Destroy(Holder.gameObject);
+                // SceneManager.LoadScene("ResultScene");
             }
         }
     }
