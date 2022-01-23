@@ -52,7 +52,8 @@ namespace Controllers
 
         protected override void OnMeleeHit(EarthObject hitter)
         {
-            Debug.Log("Player Hit!");
+            // SceneManager.LoadScene("ResultScene");
+            Debug.Log("게임 오버!");
         }
     }
 }

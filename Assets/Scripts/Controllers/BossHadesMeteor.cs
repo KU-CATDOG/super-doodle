@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Controllers
@@ -68,6 +68,8 @@ namespace Controllers
             }
             else
             {
+                // SceneManager.LoadScene("ResultScene");
+                Debug.Log("게임 오버!");
                 Destroy(targetPlayer.gameObject);
             }
 
