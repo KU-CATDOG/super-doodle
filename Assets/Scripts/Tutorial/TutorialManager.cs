@@ -41,10 +41,10 @@ public class TutorialManager : MonoBehaviour
             counter++;
         }
 
-        // 텍스트들을 모두 보여줬으므로, 본 게임 (보스0)으로 넘어가기
+        // 텍스트들을 모두 보여줬으므로, 본 게임 (보스0)으로 넘어가기 -> 맵 선택씬으로 넘어가도록 바꿈
         if (counter == 4 && timer > timeToChange)
         {
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("MapSelect");
         }
     }
 }
