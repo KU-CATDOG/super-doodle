@@ -52,7 +52,7 @@ namespace Controllers
                 // 승리했으므로 오브젝트 모두 파괴하고 게임 결과창 씬으로 이동시키기
                 Debug.Log("Game Win!");
                 Object.Destroy(Holder.gameObject);
-                // SceneManager.LoadScene("ResultScene");
+                SceneManager.LoadScene("ResultScene");
             }
         }
     }

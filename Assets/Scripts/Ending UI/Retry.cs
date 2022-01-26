@@ -12,6 +12,6 @@ public class Retry : MonoBehaviour
             SceneManager.LoadScene("MapSelect");
         }
         else if (Input.anyKeyDown)
-            SceneManager.LoadScene("Tutorial");
+            SceneManager.LoadScene("SampleScene");
     }
 }

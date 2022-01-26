@@ -56,6 +56,7 @@ public class Earth : MonoBehaviour
     {
         objectSprite.localScale = Vector3.one * Radius * 2;
         UpdateKeyCode();
+        GameManager.Inst.tempTimer = Time.time;
     }
 
     private void Update()
