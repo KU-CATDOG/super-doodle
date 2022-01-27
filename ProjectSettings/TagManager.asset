@@ -39,15 +39,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Node
     uniqueID: 1418413911
+    locked: 0
+  - name: Designs
+    uniqueID: 4030906445
     locked: 0
   - name: Player
     uniqueID: 3592189939
     locked: 0
-  - name: Designs
-    uniqueID: 4030906445
+  - name: Earth
+    uniqueID: 3711638331
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
