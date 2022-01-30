@@ -10,7 +10,7 @@ namespace Test
 
         private float lastTimeAdded;
 
-        private SpeedBar speedBar;
+        private GameObject speedBar;
 
         private void Awake()
         {
@@ -33,9 +33,8 @@ namespace Test
             var player = playerGo.AddComponent<EarthObject>();
             player.Controller = new PlayerObjectController();
 
-            var speedBarPrefab = AssetLoader.LoadPrefab<GameObject>("SpeedBar");
-            speedBar = Instantiate(speedBarPrefab).GetComponent<SpeedBar>();
-            speedBar.Initialize();
+            speedBar = GameObject.Find("SpeedBar");
+            if (speedBar != null) speedBar.GetComponent<SpeedBar>().Initialize();
 
         }
 

@@ -29,10 +29,6 @@ MonoBehaviour:
     m_Address: Assets/Prefabs/Misc
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 0502213b249bc064e85cb8625f56317e
-    m_Address: Assets/Prefabs/SpeedBar.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8a419681f6152e34781beb4ee8b3a466, type: 2}
   m_SchemaSet:
