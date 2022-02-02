@@ -45,6 +45,11 @@ namespace Tool
             {
                 pool.Add(i);
             }
+
+            for (var i = KeyCode.Insert; i <= KeyCode.F12; i++)
+            {
+                pool.Add(i);
+            }
         }
 
         public KeyCode GetKeyCode() => pool[Random.Range(0, pool.Count)];

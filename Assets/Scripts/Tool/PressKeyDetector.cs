@@ -71,6 +71,11 @@ namespace Tool
                 KeyPool.Add(i);
             }
 
+            for (var i = KeyCode.Insert; i <= KeyCode.F12; i++)
+            {
+                KeyPool.Add(i);
+            }
+
             KeyPool.Add(KeyCode.Space);
         }
 
