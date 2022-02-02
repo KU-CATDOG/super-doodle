@@ -14,7 +14,7 @@ namespace Test
 
         private void Awake()
         {
-            var loadedPrefab = AssetLoader.LoadPrefab<GameObject>("Earth");
+            var loadedPrefab = AssetLoaderManager.Inst.LoadPrefab<GameObject>("Earth");
 
             earth = Instantiate(loadedPrefab).GetComponent<Earth>();
             var t = earth.transform;

@@ -15,7 +15,7 @@ namespace Controllers
 
         protected override IEnumerator LoadResources()
         {
-            yield return AssetLoader.LoadPrefabAsync<GameObject>("EarthObjects/Mob", x =>
+            yield return AssetLoaderManager.Inst.LoadPrefabAsync<GameObject>("EarthObjects/Mob", x =>
             {
                 resource = Object.Instantiate(x);
             });
