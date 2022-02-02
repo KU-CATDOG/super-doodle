@@ -58,6 +58,14 @@ public sealed class EarthObject : MonoBehaviour
         TryAttack();
 
         controller.OnUpdate();
+
+        if(controller.GetType() == typeof(Controllers.PlayerObjectController))  // 플레이어 속도 감소
+        {
+            if(MoveSpeed > 0)
+            {
+                MoveSpeed -= Time.fixedDeltaTime / 60;
+            }
+        }
     }
 
     private void OnDestroy()
