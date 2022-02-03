@@ -63,7 +63,12 @@ public sealed class EarthObject : MonoBehaviour
         {
             if(MoveSpeed > 0)
             {
+#if UNITY_EDITOR
+                MoveSpeed -= Time.fixedDeltaTime / 600;
+#else
+                // 이쪽이 실제 빌드시 반영될 수치임
                 MoveSpeed -= Time.fixedDeltaTime / 60;
+#endif
             }
         }
     }

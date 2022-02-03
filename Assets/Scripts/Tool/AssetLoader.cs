@@ -42,22 +42,22 @@ namespace Tool
         /// Assets/Prefab 아래의 프리팹을 로드하고 로드가 끝날 때까지 기다린다. (여러 개를 연속으로 로드할 때 쓰면 심각한 퍼포먼스 저하가 있을 수도 있음)
         /// Deprecated, 대신 AssetLoaderManager.Inst 안쪽에 있는 동명의 함수를 사용하면 됩니다.
         /// </summary>
-        public static T LoadPrefab<T>(string prefabAddress) where T : UnityEngine.Object
+        public static T LoadPrefab<T>(string soundAddress) where T : UnityEngine.Object
         {
-            if (LoadedDict.TryGetValue(prefabAddress, out var v))
+            if (LoadedDict.TryGetValue(soundAddress, out var v))
             {
                 return (T)v;
             }
 
-            var op = Resources.Load<T>("/Prefabs/" + prefabAddress + ".prefab");
+            var op = Resources.Load<T>("/Prefabs/" + soundAddress + ".prefab");
 
             if (op == null)
             {
-                Debug.LogWarning($"No prefab loaded (Prefabs/{prefabAddress}.prefab)");
+                Debug.LogWarning($"No prefab loaded (Prefabs/{soundAddress}.prefab)");
                 return null;
             }
 
-            LoadedDict[prefabAddress] = op;
+            LoadedDict[soundAddress] = op;
             return op;
         }
     }

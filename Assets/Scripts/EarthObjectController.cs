@@ -97,6 +97,11 @@ public abstract class EarthObjectController
     {
     }
 
+    protected virtual void OnMeleeAttack()
+    {
+
+    }
+
     public void MeleeAttackThis(EarthObject hitter)
     {
         var now = Time.time;
@@ -104,6 +109,7 @@ public abstract class EarthObjectController
         if (now - recentHitTime < InvincibleSecond) return;
 
         recentHitTime = Time.time;
+        OnMeleeAttack();
         OnMeleeHit(hitter);
     }
 

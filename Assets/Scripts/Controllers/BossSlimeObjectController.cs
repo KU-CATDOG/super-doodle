@@ -46,14 +46,30 @@ namespace Controllers
                 Holder.MoveSpeed = Mathf.PI / 7.5f;
                 resource.transform.localScale *= 1.3f;
                 hitCount++;
+
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.CutPaper);
             }
             else
             {
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.CutPaper);
+
                 // 승리했으므로 오브젝트 모두 파괴하고 게임 결과창 씬으로 이동시키기
                 Debug.Log("Game Win!");
-                Object.Destroy(Holder.gameObject);
-                SceneManager.LoadScene("ResultScene");
+                Holder.StartCoroutine(ShowResult());
             }
+        }
+
+        private IEnumerator ShowResult()
+        {
+            float timer = 0;
+            while (timer < 1f)
+            {
+                Holder.MoveSpeed /= 2;
+                timer += Time.deltaTime;
+            }
+            yield return new WaitForSecondsRealtime(1f);
+            Object.Destroy(Holder.gameObject);
+            SceneManager.LoadScene("ResultScene");
         }
     }
 }
