@@ -57,7 +57,7 @@ namespace Controllers
 #endif
         }
 
-        protected override void OnMeleeAttack()
+        public override void OnMeleeAttack()
         {
             base.OnMeleeAttack();
             SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.KnifeDash);

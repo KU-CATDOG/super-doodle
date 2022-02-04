@@ -93,14 +93,9 @@ public abstract class EarthObjectController
     /// <summary>
     /// 땅이 제시한 키를 맞추건 틀리건 그 위에 있는 모든 오브젝트들의 이 함수가 불림
     /// </summary>
-    public virtual void OnEarthKeyPressed(bool corrected)
-    {
-    }
+    public virtual void OnEarthKeyPressed(bool corrected) { }
 
-    protected virtual void OnMeleeAttack()
-    {
-
-    }
+    public virtual void OnMeleeAttack() { }
 
     public void MeleeAttackThis(EarthObject hitter)
     {
@@ -109,7 +104,7 @@ public abstract class EarthObjectController
         if (now - recentHitTime < InvincibleSecond) return;
 
         recentHitTime = Time.time;
-        OnMeleeAttack();
+        hitter.Controller.OnMeleeAttack();
         OnMeleeHit(hitter);
     }
 
