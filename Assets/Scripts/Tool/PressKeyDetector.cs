@@ -53,16 +53,33 @@ namespace Tool
 
         private readonly Dictionary<KeyCode, KeyPressInfo> pressedKey = new Dictionary<KeyCode, KeyPressInfo>();
 
+        public static PressKeyDetector Inst;
+
         public static void Init()
         {
-            var go = new GameObject();
-            DontDestroyOnLoad(go);
+            if (Inst == null)
+            {
+                var go = new GameObject();
+                DontDestroyOnLoad(go);
+                go.name = "PressKeyDetector";
+                Inst = go.AddComponent<PressKeyDetector>();
+            }
 
-            go.name = "PressKeyDetector";
-            go.AddComponent<PressKeyDetector>();
-
+            KeyPool.Clear();
             KeyPool.AddRange(KeysUsed.UsableKeys);
             KeyPool.AddRange(KeysUsed.SpecialKeys);
+        }
+
+        public static void DestroyGameObject()
+        {
+            if (Inst != null)
+            {
+                Destroy(Inst.gameObject);
+            }
+            else
+            {
+                Debug.LogWarning("Can't destroy PressKeyDetector GameObject. Not Generated");
+            }
         }
 
         private readonly List<KeyCode> toRemove = new List<KeyCode>();

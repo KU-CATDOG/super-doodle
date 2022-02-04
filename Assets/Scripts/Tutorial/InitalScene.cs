@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Tool;
+using UnityEngine.SceneManagement;
+
+public class InitalScene : MonoBehaviour
+{
+    [Header("Values")]
+    [SerializeField] private float groundRotateSpeed = 1f;
+
+    [Header("GameObjects")]
+    [SerializeField] private Transform groundTransform;
+    [SerializeField] private TextMesh toPressTextMesh;
+
+    private KeyCode keyToPress;
+
+    private void Awake()
+    {
+        MessageSystem.Instance.Subscribe<SingleKeyPressedEvent>(OnSingleKeyEvent);
+        PressKeyDetector.Init();
+    }
+
+    private void Start()
+    {
+        keyToPress = (new RandomKeyGenerator()).GetKeyCode();
+        toPressTextMesh.text = keyToPress.ToString();
+    }
+
+    private void Update()
+    {
+        groundTransform.Rotate(new Vector3(0, 0, groundRotateSpeed * Time.deltaTime));
+    }
+
+    private void OnDestroy()
+    {
+        MessageSystem.Instance.Unsubscribe<SingleKeyPressedEvent>(OnSingleKeyEvent);
+    }
+
+    private void OnSingleKeyEvent(IEvent e)
+    {
+        if (!(e is SingleKeyPressedEvent se)) return;
+
+        if (se.PressedKey == keyToPress)
+        {
+            // 몇가지의 애니메이션 후
+            SceneManager.LoadScene("MapSelect");
+        }
+    }
+}
