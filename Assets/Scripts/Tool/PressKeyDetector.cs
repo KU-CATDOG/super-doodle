@@ -61,22 +61,8 @@ namespace Tool
             go.name = "PressKeyDetector";
             go.AddComponent<PressKeyDetector>();
 
-            for (var i = KeyCode.Alpha0; i <= KeyCode.Alpha9; i++)
-            {
-                KeyPool.Add(i);
-            }
-
-            for (var i = KeyCode.A; i <= KeyCode.Z; i++)
-            {
-                KeyPool.Add(i);
-            }
-
-            for (var i = KeyCode.Insert; i <= KeyCode.F12; i++)
-            {
-                KeyPool.Add(i);
-            }
-
-            KeyPool.Add(KeyCode.Space);
+            KeyPool.AddRange(KeysUsed.UsableKeys);
+            KeyPool.AddRange(KeysUsed.SpecialKeys);
         }
 
         private readonly List<KeyCode> toRemove = new List<KeyCode>();
