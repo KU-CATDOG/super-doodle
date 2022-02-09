@@ -43,8 +43,16 @@ public class InitalScene : MonoBehaviour
 
         if (se.PressedKey == keyToPress)
         {
+            SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.ButtonPress);
             // 몇가지의 애니메이션 후
-            SceneManager.LoadScene("MapSelect");
+            StartCoroutine(BeforeMoveScene("MapSelect"));
         }
+    }
+
+    private IEnumerator BeforeMoveScene(string moveTo)
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        SceneManager.LoadScene(moveTo);
     }
 }

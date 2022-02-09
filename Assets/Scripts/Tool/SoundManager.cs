@@ -57,8 +57,9 @@ public class SoundManager : SingletonBehavior<SoundManager>
     public enum Sounds
     {
         KnifeDash,
-        TearPaper,
-        CutPaper,
+        PaperTear,
+        PaperCut,
+        ButtonPress,
     }
 
     private class SoundSettings
@@ -86,9 +87,10 @@ public class SoundManager : SingletonBehavior<SoundManager>
     private SoundSettings GetSoundSettings(Sounds soundEnum) =>
         soundEnum switch
         {
-            Sounds.CutPaper => new SoundSettings("종이찢기2"),
-            Sounds.TearPaper => new SoundSettings("종이찢기1"),
+            Sounds.PaperCut => new SoundSettings("종이찢기2"),
+            Sounds.PaperTear => new SoundSettings("종이찢기1"),
             Sounds.KnifeDash => new SoundSettings("검베기1", 0.5f),
+            Sounds.ButtonPress => new SoundSettings("버튼(15)"),
             _ => new SoundSettings("검베기(기모으기)"),
         };
     #endregion

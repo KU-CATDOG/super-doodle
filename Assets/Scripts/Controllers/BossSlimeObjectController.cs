@@ -47,11 +47,11 @@ namespace Controllers
                 resource.transform.localScale *= 1.3f;
                 hitCount++;
 
-                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.CutPaper);
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.PaperCut);
             }
             else
             {
-                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.CutPaper);
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.PaperCut);
 
                 // 승리했으므로 오브젝트 모두 파괴하고 게임 결과창 씬으로 이동시키기
                 Debug.Log("Game Win!");

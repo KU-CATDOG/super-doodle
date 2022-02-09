@@ -65,7 +65,7 @@ namespace Controllers
 
         protected override void OnMeleeHit(EarthObject hitter)
         {
-            SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.TearPaper);
+            SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.PaperTear);
             Debug.Log("게임 오버!");
             // SceneManager.LoadScene("ResultScene");
         }
