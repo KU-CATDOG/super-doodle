@@ -55,7 +55,7 @@ namespace Test
             };
 
             var mob = mobGo.AddComponent<EarthObject>();
-            mob.Controller = new BossSlimeObjectController();
+            mob.Controller = new BossHadesObjectController();
             mob.Radian = Mathf.PI * 1.5f;
 
             lastTimeAdded = now;
