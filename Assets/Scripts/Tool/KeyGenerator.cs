@@ -76,20 +76,24 @@ namespace Tool
                 //KeyCode.Pause,
             }) ;
             
+            // 상단 숫자버튼들
             for (var i = KeyCode.Alpha0; i <= KeyCode.Alpha9; ++i)
             {
                 keyCodes.Add(i);
             }
 
+            // 알파벳
             for (var i = KeyCode.A; i <= KeyCode.Z; ++i)
             {
                 keyCodes.Add(i);
             }
             
+            // 키패드
             for (var i = KeyCode.Keypad0; i <= KeyCode.F12; ++i)
             {
                 keyCodes.Add(i);
             }
+            keyCodes.Remove(KeyCode.KeypadEquals);
 
             return keyCodes;
         }
