@@ -44,7 +44,8 @@ namespace Controllers
             if (hitCount == 0)
             {
                 Holder.MoveSpeed = Mathf.PI / 7.5f;
-                resource.transform.localScale *= 1.3f;
+                //resource.transform.localScale *= 1.3f;
+                resource.GetComponent<SpriteSelector>().SetSprite(1);
                 hitCount++;
 
                 SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.PaperCut);
@@ -61,15 +62,17 @@ namespace Controllers
 
         private IEnumerator ShowResult()
         {
+            resource.GetComponent<SpriteSelector>().HideSprite();
+            /*
             float timer = 0;
             while (timer < 1f)
             {
-                Holder.MoveSpeed /= 2;
+                Holder.MoveSpeed = Mathf.SmoothStep(Holder.MoveSpeed, 0, timer);
                 timer += Time.deltaTime;
-            }
+                yield return null;
+            }*/
             GameManager.Inst.gameState = GameManager.GameState.EndGame;
             yield return new WaitForSecondsRealtime(1f);
-            Object.Destroy(Holder.gameObject);
             SceneManager.LoadScene("ResultScene");
         }
     }
