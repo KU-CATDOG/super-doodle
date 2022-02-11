@@ -4,8 +4,16 @@ using UnityEngine;
 
 namespace Test
 {
+    public enum Boss
+    {
+        BossSlime,
+        BossHades,
+    }
+
     public class EarthTester : MonoBehaviour
     {
+        public Boss currentBoss;
+
         private Earth earth;
 
         private float lastTimeAdded;
@@ -55,10 +63,17 @@ namespace Test
             };
 
             var mob = mobGo.AddComponent<EarthObject>();
-            mob.Controller = new BossHadesObjectController();
+            mob.Controller = SelectBoss(currentBoss);
             mob.Radian = Mathf.PI * 1.5f;
 
             lastTimeAdded = now;
         }
+
+        private EarthObjectController SelectBoss(Boss bossSelected) => bossSelected switch
+        {
+            Boss.BossSlime => new BossSlimeObjectController(),
+            Boss.BossHades => new BossHadesObjectController(),
+            _ => new BossSlimeObjectController(),
+        };
     }
 }
