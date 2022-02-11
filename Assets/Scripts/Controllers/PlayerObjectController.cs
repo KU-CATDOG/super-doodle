@@ -12,6 +12,10 @@ namespace Controllers
 
         protected override float InvincibleSecond => 3;
 
+        protected float maxMoveSpeed = Mathf.PI / 2;
+
+        private bool isOnAnimation = false;
+
         protected override IEnumerator LoadResources()
         {
             yield return AssetLoaderManager.Inst.LoadPrefabAsync<GameObject>("EarthObjects/Player", x =>
@@ -47,14 +51,32 @@ namespace Controllers
         {
 #if UNITY_EDITOR
             Holder.MoveSpeed = corrected
-                ? Mathf.Min(Holder.MoveSpeed + 1f, Mathf.PI / 2)
+                ? Mathf.Min(Holder.MoveSpeed + 1f, maxMoveSpeed)
                 : Mathf.Max(Holder.MoveSpeed - 1f, 0);
 #else
             // 이쪽이 빌드시 반영되는 수치
             Holder.MoveSpeed = corrected
-                ? Mathf.Min(Holder.MoveSpeed + 0.2f, Mathf.PI / 2)
+                ? Mathf.Min(Holder.MoveSpeed + 0.2f, maxMoveSpeed)
                 : Mathf.Max(Holder.MoveSpeed - 0.2f, 0);
 #endif
+        }
+
+        public override void OnMeleeReady()
+        {
+            base.OnMeleeReady();
+            if (!isOnAnimation)
+            {
+                Holder.StartCoroutine(MeleeReady());
+            }
+        }
+
+        IEnumerator MeleeReady()
+        {
+            isOnAnimation = true;
+            Holder.MoveSpeed += Mathf.PI;
+            yield return new WaitForSeconds(0.3f);
+            Holder.MoveSpeed /= 6;
+            isOnAnimation = false;
         }
 
         public override void OnMeleeAttack()
@@ -66,6 +88,8 @@ namespace Controllers
         protected override void OnMeleeHit(EarthObject hitter)
         {
             SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.PaperTear);
+            GameManager.Inst.gameState = GameManager.GameState.EndGame;
+            Object.Destroy(Holder);
             Debug.Log("게임 오버!");
             // SceneManager.LoadScene("ResultScene");
         }

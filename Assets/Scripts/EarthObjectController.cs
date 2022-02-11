@@ -97,6 +97,8 @@ public abstract class EarthObjectController
 
     public virtual void OnMeleeAttack() { }
 
+    public virtual void OnMeleeReady() { }
+
     public void MeleeAttackThis(EarthObject hitter)
     {
         var now = Time.time;

@@ -22,6 +22,8 @@ namespace Test
 
         private void Awake()
         {
+            GameManager.Inst.gameState = GameManager.GameState.InGame;
+
             var loadedPrefab = AssetLoaderManager.Inst.LoadPrefab<GameObject>("Earth");
 
             earth = Instantiate(loadedPrefab).GetComponent<Earth>();
@@ -53,6 +55,8 @@ namespace Test
             if (now - lastTimeAdded <= 1f) return;
 
             if (earth.ObjectCount > 1) return;
+
+            if (GameManager.Inst.gameState != GameManager.GameState.InGame) return;
 
             var mobGo = new GameObject
             {

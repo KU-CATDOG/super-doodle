@@ -67,6 +67,7 @@ namespace Controllers
                 Holder.MoveSpeed /= 2;
                 timer += Time.deltaTime;
             }
+            GameManager.Inst.gameState = GameManager.GameState.EndGame;
             yield return new WaitForSecondsRealtime(1f);
             Object.Destroy(Holder.gameObject);
             SceneManager.LoadScene("ResultScene");

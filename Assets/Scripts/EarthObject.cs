@@ -83,7 +83,10 @@ public sealed class EarthObject : MonoBehaviour
         // 다른 오브젝트를 못 때리는 상태라면
         if (!controller.CanAttackOtherObject) return;
 
-        var attackRange = Mathf.PI / 30;
+        var forwardRange = Mathf.PI / 10; // 공격 애니메이션 등의 모션을 시작할 거리
+        var attackRange = Mathf.PI / 30; // 실제 공격할때의 사거리
+
+        bool attacked = false;
 
         foreach (var target in Earth.ProbeEarthObject(Radian + attackRange / 2, attackRange))
         {
@@ -96,6 +99,25 @@ public sealed class EarthObject : MonoBehaviour
             if (!c.IsResourceLoaded) continue;
 
             c.MeleeAttackThis(this);
+            attacked = true;
+        }
+
+        if (attacked)
+        {
+            return;
+        }
+
+        foreach (var target in Earth.ProbeEarthObject(Radian + forwardRange / 2, attackRange))
+        {
+            var c = target.controller;
+
+            // 같은 편은 안 때린다.
+            if (c.Side == controller.Side) continue;
+
+            // 전부 로딩되지 않은 경우에도 넘어간다.
+            if (!c.IsResourceLoaded) continue;
+
+            controller.OnMeleeReady();
         }
     }
 
