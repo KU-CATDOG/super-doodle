@@ -110,6 +110,8 @@ namespace Tool
         public IReadOnlyCollection<KeyCode> CandidatePool { get; }
 
         public KeyCode GetKeyCode();
+
+        public string KeyCodeToString(KeyCode key);
     }
 
     public static class EarthKeyGenerator
@@ -122,6 +124,8 @@ namespace Tool
         public IReadOnlyCollection<KeyCode> CandidatePool => new HashSet<KeyCode> { KeyCode.Backspace };
 
         public KeyCode GetKeyCode() => KeyCode.Backspace;
+
+        public string KeyCodeToString(KeyCode key) => key.ToString();
     }
 
     public class RandomKeyGenerator : IKeyGenerator
@@ -136,5 +140,44 @@ namespace Tool
         }
 
         public KeyCode GetKeyCode() => pool[Random.Range(0, pool.Count)];
+
+        public string KeyCodeToString(KeyCode key) => key switch
+        {
+            KeyCode.Return => "Enter",
+
+            KeyCode.LeftBracket => "[",
+            KeyCode.RightBracket => "]",
+            KeyCode.Backslash => "\\",
+            KeyCode.Semicolon => ";",
+            KeyCode.Quote => "\'",
+            KeyCode.Comma => ",",
+            KeyCode.Period => ".",
+            KeyCode.Slash => "/",
+
+            KeyCode.BackQuote => "`",
+            KeyCode.Minus => "-",
+            KeyCode.Equals => "=",
+
+            KeyCode.SysReq => "PrintScreen",
+            
+            KeyCode.Alpha1 => "Upside 1",
+            KeyCode.Alpha2 => "Upside 2",
+            KeyCode.Alpha3 => "Upside 3",
+            KeyCode.Alpha4 => "Upside 4",
+            KeyCode.Alpha5 => "Upside 5",
+            KeyCode.Alpha6 => "Upside 6",
+            KeyCode.Alpha7 => "Upside 7",
+            KeyCode.Alpha8 => "Upside 8",
+            KeyCode.Alpha9 => "Upside 9",
+            KeyCode.Alpha0 => "Upside 0",
+
+            KeyCode.KeypadPeriod => "Keypad .",
+            KeyCode.KeypadDivide => "Keypad /",
+            KeyCode.KeypadMultiply => "Keypad *",
+            KeyCode.KeypadMinus => "Keypad -",
+            KeyCode.KeypadPlus => "Keypad +",
+
+            _ => key.ToString()
+        };
     }
 }

@@ -23,8 +23,9 @@ public class InitalScene : MonoBehaviour
 
     private void Start()
     {
-        keyToPress = (new RandomKeyGenerator()).GetKeyCode();
-        toPressTextMesh.text = keyToPress.ToString();
+        var gen = new RandomKeyGenerator();
+        keyToPress = gen.GetKeyCode();
+        toPressTextMesh.text = gen.KeyCodeToString(keyToPress);
     }
 
     private void Update()

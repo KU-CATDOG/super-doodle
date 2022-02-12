@@ -15,7 +15,7 @@ public class Retry : MonoBehaviour
     private void Start()
     {
         key = EarthKeyGenerator.KeyGenerator.GetKeyCode();
-        retryText.text = "Press " + key + " To Retry";
+        retryText.text = "Press " + EarthKeyGenerator.KeyGenerator.KeyCodeToString(key) + " To Retry";
     }
 
     private void Update()

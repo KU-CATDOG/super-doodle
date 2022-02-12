@@ -144,11 +144,11 @@ public class Earth : MonoBehaviour
             currentKey = (keyCache, gen.CandidatePool);
         }
 
-        keyText.text = currentKey.key.ToString();
+        keyText.text = gen.KeyCodeToString(currentKey.key);
 
         keyCache = gen.GetKeyCode();
         nextKey = (keyCache, gen.CandidatePool);
-        nextKeyText.text = nextKey.key.ToString();
+        nextKeyText.text = gen.KeyCodeToString(nextKey.key);
     }
 
     private void UpdateCollisionInfo()
