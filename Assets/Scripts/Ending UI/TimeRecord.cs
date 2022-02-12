@@ -11,7 +11,14 @@ public class TimeRecord : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        record.text = $"Record: {(Time.time - GameManager.Inst.tempTimer).ToString("N2")}초";
+        if (GameManager.Inst.isRecentGameWin)
+        {
+            record.text = $"Record: {(Time.time - GameManager.Inst.tempTimer).ToString("N2")}";
+        }
+        else
+        {
+            record.text = "Record: --:--";
+        }
     }
 
 }

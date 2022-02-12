@@ -14,15 +14,12 @@ public class BestRecord : MonoBehaviour
     void Start()
     {
         cur_record = Time.time - GameManager.Inst.tempTimer;
-        if (best_time_record == 0)
-            best_time_record = cur_record;
-        else
+        if ((best_time_record == 0 || cur_record <= best_time_record) && GameManager.Inst.isRecentGameWin)
         {
-            if (cur_record <= best_time_record)
-                best_time_record = cur_record;
+            best_time_record = cur_record;
         }
         
-        bestrecord.text = "Best Record: " + best_time_record.ToString("N2");
+        bestrecord.text = "Best Record: " + (best_time_record != 0 ? best_time_record.ToString("N2") : "--:--");
     }
 }
 

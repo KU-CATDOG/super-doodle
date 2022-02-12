@@ -72,6 +72,7 @@ namespace Controllers
                 yield return null;
             }*/
             GameManager.Inst.gameState = GameManager.GameState.EndGame;
+            GameManager.Inst.isRecentGameWin = true;
             yield return new WaitForSecondsRealtime(1f);
             SceneManager.LoadScene("ResultScene");
         }

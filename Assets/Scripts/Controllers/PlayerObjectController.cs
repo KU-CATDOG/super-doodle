@@ -1,6 +1,7 @@
 using System.Collections;
 using Tool;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Controllers
 {
@@ -89,9 +90,10 @@ namespace Controllers
         {
             SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.PaperTear);
             GameManager.Inst.gameState = GameManager.GameState.EndGame;
+            GameManager.Inst.isRecentGameWin = false;
             Object.Destroy(Holder);
             Debug.Log("게임 오버!");
-            // SceneManager.LoadScene("ResultScene");
+            SceneManager.LoadScene("ResultScene");
         }
     }
 }

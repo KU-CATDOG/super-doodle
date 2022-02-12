@@ -6,8 +6,6 @@ public class GameManager : SingletonBehavior<GameManager>
 {
     public float tempTimer = 0;
 
-    public GameState gameState;
-
     public enum GameState
     {
         Menu,
@@ -15,4 +13,7 @@ public class GameManager : SingletonBehavior<GameManager>
         EndGame,
         Result,
     }
+    public GameState gameState;
+
+    public bool isRecentGameWin = false;
 }
