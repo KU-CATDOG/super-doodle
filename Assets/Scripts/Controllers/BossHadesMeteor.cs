@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Controllers
 {
@@ -68,9 +69,8 @@ namespace Controllers
             }
             else
             {
-                // SceneManager.LoadScene("ResultScene");
-                Debug.Log("게임 오버!");
                 Destroy(targetPlayer.gameObject);
+                SceneManager.LoadScene("ResultScene");
             }
 
             allMeteor.Remove(this);

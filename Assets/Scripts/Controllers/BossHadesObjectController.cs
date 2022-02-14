@@ -9,6 +9,8 @@ namespace Controllers
     {
         private int phase;
 
+        private float timer;
+
         private BossHadesMeteor meteorPrefab;
 
         protected override float InvincibleSecond => 3;
@@ -37,6 +39,7 @@ namespace Controllers
             MessageSystem.Instance.Subscribe<SingleKeyPressedEvent>(OnEvent);
 
             phase = 0;
+            timer = Time.time;
             recentMeteorTime = 0;
         }
 
@@ -53,16 +56,11 @@ namespace Controllers
 
         protected override void OnMeleeHit(EarthObject hitter)
         {
-            if (phase == 2)
-            {
-                // 승리했으므로 오브젝트 모두 파괴하고 게임 결과창 씬으로 이동시키기
-                UnloadResources();
-                Object.Destroy(Holder.gameObject);
-                // SceneManager.LoadScene("ResultScene");
-                return;
-            }
-
-            phase++;
+            // 승리했으므로 오브젝트 모두 파괴하고 게임 결과창 씬으로 이동시키기
+            UnloadResources();
+            Object.Destroy(Holder.gameObject);
+            SceneManager.LoadScene("ResultScene");
+            return;
         }
 
         private void OnEvent(IEvent e)
@@ -79,7 +77,18 @@ namespace Controllers
 
         public override void OnUpdate()
         {
-            var now = Time.time;
+            var now = Time.time - timer;
+
+            if (phase == 0 && now >= 15f)
+            {
+                phase = 1;
+                Holder.MoveSpeed = Mathf.PI / 7.5f;
+            }
+
+            if (phase == 1 && now >= 30f)
+            {
+                phase = 2;
+            }
 
             if (now - recentMeteorTime < MeteorCooltime) return;
 
@@ -97,9 +106,9 @@ namespace Controllers
 
         private float MeteorCooltime => phase switch
         {
-            0 => 0.33f,
-            1 => 0.16f,
-            _ => 0.1f,
+            0 => 1f,
+            1 => 0.5f,
+            _ => 0.33f,
         };
 
         private float MeteorSpeed => phase switch
