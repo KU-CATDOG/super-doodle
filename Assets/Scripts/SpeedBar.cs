@@ -22,7 +22,7 @@ public class SpeedBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        curSpeed = player.MoveSpeed;
+        curSpeed = Mathf.Abs(player.MoveSpeed);
         radial.fillAmount = curSpeed / maxSpeed;
     }
 }
