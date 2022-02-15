@@ -8,6 +8,7 @@ namespace Controllers
     public class BossHadesObjectController : EarthObjectController
     {
         private int phase;
+        private int hitCount;
 
         private float timer;
 
@@ -41,6 +42,7 @@ namespace Controllers
             phase = 0;
             timer = Time.time;
             recentMeteorTime = 0;
+            hitCount = 0;
         }
 
         protected override void OnDetached()
@@ -57,10 +59,14 @@ namespace Controllers
         protected override void OnMeleeHit(EarthObject hitter)
         {
             // 승리했으므로 오브젝트 모두 파괴하고 게임 결과창 씬으로 이동시키기
-            UnloadResources();
-            Object.Destroy(Holder.gameObject);
-            SceneManager.LoadScene("ResultScene");
-            return;
+            hitCount++;
+            if (hitCount == 2)
+            {
+                UnloadResources();
+                Object.Destroy(Holder.gameObject);
+                SceneManager.LoadScene("ResultScene");
+                return;
+            }
         }
 
         private void OnEvent(IEvent e)
@@ -79,13 +85,13 @@ namespace Controllers
         {
             var now = Time.time - timer;
 
-            if (phase == 0 && now >= 15f)
+            if (phase == 0 && now >= 10f)
             {
                 phase = 1;
                 Holder.MoveSpeed = Mathf.PI / 7.5f;
             }
 
-            if (phase == 1 && now >= 30f)
+            if (phase == 1 && now >= 20f)
             {
                 phase = 2;
             }
@@ -108,7 +114,7 @@ namespace Controllers
         {
             0 => 1f,
             1 => 0.5f,
-            _ => 0.33f,
+            _ => 0.25f,
         };
 
         private float MeteorSpeed => phase switch
