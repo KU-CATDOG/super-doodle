@@ -42,7 +42,12 @@ public class Node : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if(mapIndex < SceneManager.sceneCountInBuildSettings) SceneManager.LoadScene(mapIndex);
+                if(mapIndex < SceneManager.sceneCountInBuildSettings)
+                {
+                    //SelectedLevel.index = mapIndex;
+                    SceneManager.LoadScene(mapIndex);
+                    //SceneManager.LoadScene(1); // samplescene
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
