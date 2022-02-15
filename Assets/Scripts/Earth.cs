@@ -117,10 +117,9 @@ public class Earth : MonoBehaviour
 
         var isCorrect = se.PressedKey == currentKey.key;
 
-        if (isCorrect)
-        {
-            UpdateKeyCode();
-        }
+        //if (isCorrect)
+        UpdateKeyCode();
+
 
         foreach (var i in objects.SelectMany(kv => kv.Value))
         {

@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MapSelect.unity
     guid: 3d2e4883c0edc9c45b4c643ef7ad2e05
   - enabled: 1
+    path: Assets/Scenes/BossSlime.unity
+    guid: 492c8f795b31ae34c942a927bd338391
+  - enabled: 1
+    path: Assets/Scenes/BossHades.unity
+    guid: 9037b3857c1c4b148a1588b300f9a5af
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
