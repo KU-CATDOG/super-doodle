@@ -16,11 +16,14 @@ namespace Controllers
 
         protected override bool AttackEnabled => true;
 
+        private SpriteController spriteController;
+
         protected override IEnumerator LoadResources()
         {
             yield return AssetLoaderManager.Inst.LoadPrefabAsync<GameObject>("EarthObjects/Slime", x =>
             {
                 resource = Object.Instantiate(x);
+                spriteController = resource.GetComponent<SpriteController>();
             });
         }
 
@@ -45,10 +48,11 @@ namespace Controllers
             {
                 Holder.MoveSpeed = Mathf.PI / 7.5f;
                 //resource.transform.localScale *= 1.3f;
-                resource.GetComponent<SpriteSelector>().SetSprite(1);
                 hitCount++;
 
+                spriteController.SetSprite(1);
                 SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.PaperCut);
+                spriteController.SetAnimatiorParameter("ChangePhase");
             }
             else
             {
@@ -62,7 +66,7 @@ namespace Controllers
 
         private IEnumerator ShowResult()
         {
-            resource.GetComponent<SpriteSelector>().HideSprite();
+            spriteController.HideSprite();
             /*
             float timer = 0;
             while (timer < 1f)
