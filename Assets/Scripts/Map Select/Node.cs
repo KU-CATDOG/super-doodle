@@ -52,7 +52,8 @@ public class Node : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Debug.Log("Return to Menu");
+                //Debug.Log("Return to Menu");
+                SceneManager.LoadScene("MenuScene");
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))

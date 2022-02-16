@@ -46,7 +46,7 @@ public class InitalScene : MonoBehaviour
         {
             SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.ButtonPress);
             // 몇가지의 애니메이션 후
-            StartCoroutine(BeforeMoveScene("MapSelect"));
+            StartCoroutine(BeforeMoveScene("MenuScene"));
         }
     }
 
