@@ -54,3 +54,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: TopObject
+    uniqueID: 1340970099
+    locked: 0

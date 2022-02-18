@@ -13,7 +13,12 @@ namespace Controllers
 
         protected override float InvincibleSecond => 3;
 
-        protected float maxMoveSpeed = Mathf.PI / 2;
+        protected float maxMoveSpeed =
+#if UNITY_EDITOR
+            Mathf.PI;
+#else
+            Mathf.PI / 2;
+#endif
 
         private bool isOnAnimation = false;
 
@@ -52,7 +57,7 @@ namespace Controllers
         {
 #if UNITY_EDITOR
             Holder.MoveSpeed = corrected
-                ? Mathf.Min(Holder.MoveSpeed + 1f, maxMoveSpeed)
+                ? Mathf.Min(Holder.MoveSpeed + Mathf.PI, maxMoveSpeed)
                 : Mathf.Max(Holder.MoveSpeed - 1f, 0);
 #else
             // 이쪽이 빌드시 반영되는 수치

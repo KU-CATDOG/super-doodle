@@ -67,6 +67,7 @@ namespace Controllers
         private IEnumerator ShowResult()
         {
             spriteController.HideSprite();
+            spriteController.KillCutSprite();
             /*
             float timer = 0;
             while (timer < 1f)
