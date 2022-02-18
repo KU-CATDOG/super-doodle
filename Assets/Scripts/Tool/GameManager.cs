@@ -16,4 +16,6 @@ public class GameManager : SingletonBehavior<GameManager>
     public GameState gameState;
 
     public bool isRecentGameWin = false;
+
+    public Test.Boss currentBoss;
 }

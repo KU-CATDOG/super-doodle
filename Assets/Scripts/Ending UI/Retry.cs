@@ -26,7 +26,7 @@ public class Retry : MonoBehaviour
         }
         else if (Input.GetKeyDown(key))
         {
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene(GameManager.Inst.currentBoss.ToString());
         }
     }
 }

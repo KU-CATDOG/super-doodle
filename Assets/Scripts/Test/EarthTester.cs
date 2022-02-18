@@ -23,6 +23,7 @@ namespace Test
         private void Awake()
         {
             GameManager.Inst.gameState = GameManager.GameState.InGame;
+            GameManager.Inst.currentBoss = currentBoss;
 
             var loadedPrefab = AssetLoaderManager.Inst.LoadPrefab<GameObject>("Earth");
 
