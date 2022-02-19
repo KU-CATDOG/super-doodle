@@ -24,7 +24,7 @@ public class MainCameraController : MonoBehaviour
         curSpeed = Mathf.Abs(player.MoveSpeed);
         // 카메라 size = 현재 속도 + 5임.
         // 카메라 사이즈가 현재속도보다 작다면 -> 카메라 사이즈는 커져야함.
-        if (cameraObject.GetComponent<Camera>().orthographicSize <= 15 && cameraObject.GetComponent<Camera>().orthographicSize < curSpeed + 5)
+        if (cameraObject.GetComponent<Camera>().orthographicSize <= 10 && cameraObject.GetComponent<Camera>().orthographicSize < curSpeed + 5)
         {
             cameraObject.GetComponent<Camera>().orthographicSize += 0.01f;
         }
