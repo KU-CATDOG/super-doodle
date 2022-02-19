@@ -22,11 +22,14 @@ namespace Controllers
 
         private bool isOnAnimation = false;
 
+        private SpriteController spriteController;
+
         protected override IEnumerator LoadResources()
         {
             yield return AssetLoaderManager.Inst.LoadPrefabAsync<GameObject>("EarthObjects/Player", x =>
             {
                 resource = Object.Instantiate(x);
+                spriteController = resource.GetComponent<SpriteController>();
             });
         }
 
@@ -57,13 +60,15 @@ namespace Controllers
         {
 #if UNITY_EDITOR
             Holder.MoveSpeed = corrected
-                ? Mathf.Min(Holder.MoveSpeed + Mathf.PI, maxMoveSpeed)
+                ? Mathf.Min(Holder.MoveSpeed + 0.3f, maxMoveSpeed)
                 : Mathf.Max(Holder.MoveSpeed - 1f, 0);
+            spriteController.SetAnimatiorParameter("Speed", Holder.MoveSpeed);
 #else
             // 이쪽이 빌드시 반영되는 수치
             Holder.MoveSpeed = corrected
                 ? Mathf.Min(Holder.MoveSpeed + 0.2f, maxMoveSpeed)
                 : Mathf.Max(Holder.MoveSpeed - 0.2f, 0);
+            spriteController.SetAnimatiorParameter("Speed", Holder.MoveSpeed);
 #endif
         }
 
