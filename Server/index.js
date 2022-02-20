@@ -1,10 +1,32 @@
 import express from 'express';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
 /* Rank file load */
-const jsonFile = readFileSync('./ranks.json', 'utf8');
+const fileName = './ranks.json';
+const jsonFile = readFileSync(fileName, 'utf8');
 const jsonData = JSON.parse(jsonFile);
 console.log(jsonData);
+
+function saveRankDataToJson() {
+    writeFileSync(fileName, JSON.stringify(jsonData));
+}
+
+/* Rank array control */
+function addToRankData() {
+    if (inputQueue.length === 0) {
+        return;
+    } else {
+        let data = (inputQueue.splice(0, 1))[0];
+        jsonData.ranks.push(data);
+        jsonData.ranks.sort((a, b) => a.record - b.record);
+
+        if (inputQueue.length === 0) {
+            saveRankDataToJson();
+        } else {
+            addToRankData();
+        }
+    }
+}
 
 /* REST server start */
 const app = express();
@@ -17,7 +39,14 @@ app.get("/rank", (req, res) => {
 
 app.post("/rank", (req, res) => {
     console.log(req.body);
-    // inputQueue에 넣고, 차례대로 정리할 수 있도록
+    inputQueue.push({
+        timeStamp: Date.now(),
+        name: req.body.name,
+        stage: req.body.stage,
+        record: req.body.record
+    });
+    addToRankData();
+
     res.status(200);
 });
 
