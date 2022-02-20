@@ -1,0 +1,16 @@
+{
+    "ranks": [
+        {
+            "timestamp": 777,
+            "name": "hello world",
+            "stage": 0,
+            "record": 1
+        },
+        {
+            "timestamp": 888,
+            "name": "hello world2",
+            "stage": 0,
+            "record": 2
+        }
+    ]
+}
