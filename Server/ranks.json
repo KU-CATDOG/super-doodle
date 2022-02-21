@@ -1,16 +1,16 @@
 {
     "ranks": [
         {
-            "timestamp": 777,
-            "name": "hello world",
+            "timeStamp": 1645408816052,
+            "name": "TESTNAME",
             "stage": 0,
-            "record": 1
+            "record": 12189
         },
         {
-            "timestamp": 888,
-            "name": "hello world2",
+            "timeStamp": 1645408781884,
+            "name": "TESTNAME",
             "stage": 0,
-            "record": 2
+            "record": 23920
         }
     ]
 }

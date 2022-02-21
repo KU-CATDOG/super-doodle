@@ -36,6 +36,8 @@ const app = express();
 const PORT = 5454;
 const inputQueue = [];
 
+app.use(express.json());
+
 app.get("/rank", (req, res) => {
     res.send(jsonFile);
 });
@@ -51,12 +53,12 @@ app.post("/rank", (req, res) => {
         });
         addToRankData();
 
-        res.status(200);
+        res.status(200).send();
     } catch (e) {
         console.warn(e);
-        res.status(400)
+        res.status(400).send();
     }
-    res.status(500);
+    res.status(500).send();
 });
 
 function handleListening (){
