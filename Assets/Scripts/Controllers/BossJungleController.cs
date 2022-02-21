@@ -11,6 +11,7 @@ namespace Controllers
         private float startTime;
 
         private BossJungleBanana bananaPrefab;
+        private BossJunglePineApple pineApplePrefab;
 
         protected override float InvincibleSecond => 3;
 
@@ -28,6 +29,11 @@ namespace Controllers
             yield return AssetLoaderManager.Inst.LoadPrefabAsync<GameObject>("Misc/JungleBanana", x =>
             {
                 bananaPrefab = x.GetComponent<BossJungleBanana>();
+            });
+
+            yield return AssetLoaderManager.Inst.LoadPrefabAsync<GameObject>("Misc/JunglePineApple", x =>
+            {
+                pineApplePrefab = x.GetComponent<BossJunglePineApple>();
             });
         }
 
@@ -64,7 +70,14 @@ namespace Controllers
         {
             if (!(e is SingleKeyPressedEvent { PressedKey: KeyCode.Space })) return;
 
-            Holder.StartCoroutine(BossJungleBanana.DodgeBanana());
+            if (phase == 0)
+            {
+                Holder.StartCoroutine(BossJungleBanana.DodgeBanana());
+            }
+            if (phase == 1)
+            {
+                Holder.StartCoroutine(BossJunglePineApple.DodgePineApple());
+            }
         }
 
         public override void OnUpdate()
@@ -81,8 +94,23 @@ namespace Controllers
 
                 recentBananaTime = now;
             }
+            if (phase == 1)
+            {
+                if (now - recentPineAppleTime < 5f) return;
+
+                var newPineApple = Object.Instantiate(pineApplePrefab);
+                newPineApple.Init(Holder.Earth.Player);
+                newPineApple.transform.localPosition = Holder.Controller.ResourceWorldPos;
+
+                recentPineAppleTime = now;
+            }
+            if (phase == 2)
+            {
+                // 복숭아
+            }
         }
 
         private float recentBananaTime;
+        private float recentPineAppleTime;
     }
 }
