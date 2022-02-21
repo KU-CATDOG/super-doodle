@@ -42,15 +42,21 @@ app.get("/rank", (req, res) => {
 
 app.post("/rank", (req, res) => {
     console.log(req.body);
-    inputQueue.push({
-        timeStamp: Date.now(),
-        name: req.body.name,
-        stage: req.body.stage,
-        record: req.body.record
-    });
-    addToRankData();
+    try {
+        inputQueue.push({
+            timeStamp: Date.now(),
+            name: req.body.name,
+            stage: req.body.stage,
+            record: req.body.record
+        });
+        addToRankData();
 
-    res.status(200);
+        res.status(200);
+    } catch (e) {
+        console.warn(e);
+        res.status(400)
+    }
+    res.status(500);
 });
 
 function handleListening (){
