@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tool;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class InitalScene : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class InitalScene : MonoBehaviour
 
     [Header("GameObjects")]
     [SerializeField] private Transform groundTransform;
-    [SerializeField] private TextMesh toPressTextMesh;
+    [SerializeField] private TextMeshPro toPressTextMesh;
 
     private KeyCode keyToPress;
 
