@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -11,18 +12,49 @@ public class ReqScore
     public int record;
 }
 
+[Serializable]
+public class ResRanks
+{
+    public ResRank[] ranks;
+}
+
+[Serializable]
+public class ResRank
+{
+    public int timeStamp;
+    public string name;
+    public int stage;
+    public int record;
+}
+
 public class RankController : MonoBehaviour
 {
     [SerializeField]
     private string serverPath = "http://localhost:5454";
 
-    public void SendScore(ReqScore score)
+    private ResRanks getResult = new ResRanks();
+
+    public void SendScore(ReqScore score, Action then = null)
     {
-        StartCoroutine(Post("rank", JsonUtility.ToJson(score)));
+        StartCoroutine(Post("rank", JsonUtility.ToJson(score), then));
     }
 
-    private IEnumerator Get(string uri="")
+    public void GetRanks(int from, int length, Action<ResRank[]> then = null)
     {
+        StartCoroutine(Get("rank", () =>
+        {
+            ResRank[] newResult = new ResRank[length];
+            for (int i = from; i - from < Mathf.Min(length, getResult.ranks.Length); ++i)
+            {
+                newResult[i - from] = getResult.ranks[i];
+            }
+            then?.Invoke(newResult);
+        }));
+    }
+
+    private IEnumerator Get(string uri="", Action then = null)
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
         var url = $"{serverPath}/{uri}";
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
@@ -38,21 +70,15 @@ public class RankController : MonoBehaviour
             {
                 //바이너리 데이터를 복구 
                 byte[] results = www.downloadHandler.data;
-
                 var message = Encoding.UTF8.GetString(results);
+                getResult = JsonUtility.FromJson<ResRanks>(message);
 
-                Debug.Log(message);     //응답했다.!
-
-                //JsonUtility.FromJson()
-                //var res_common = JsonConvert.DeserializeObject<res_common>(message);
-
-                //Debug.LogFormat("{0}, {1}", res_common.cmd, res_common.message);
-
+                then?.Invoke();
             }
         }
     }
 
-    private IEnumerator Post(string uri, string data)
+    private IEnumerator Post(string uri, string data, Action then = null)
     {
         var url = $"{serverPath}/{uri}";
 
@@ -68,16 +94,14 @@ public class RankController : MonoBehaviour
         yield return request.SendWebRequest();
 
         //응답을 받았습니다.
-        //Debug.Log(request.downloadHandler.data);
         if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
         {
             Debug.LogWarning(request.downloadHandler.error);
         }
         else
         {
-            Debug.Log(request.downloadHandler.isDone);
+            //Debug.Log(request.downloadHandler.isDone);
+            then?.Invoke();
         }
-        //var res_login = JsonConvert.DeserializeObject<res_login>(request.downloadHandler.text);
-        //Debug.LogFormat("{0}, {1}", res_login.cmd, res_login.message);
     }
 }

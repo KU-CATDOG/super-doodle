@@ -1,16 +1,1 @@
-{
-    "ranks": [
-        {
-            "timeStamp": 1645408816052,
-            "name": "TESTNAME",
-            "stage": 0,
-            "record": 12189
-        },
-        {
-            "timeStamp": 1645408781884,
-            "name": "TESTNAME",
-            "stage": 0,
-            "record": 23920
-        }
-    ]
-}
+{"ranks":[]}

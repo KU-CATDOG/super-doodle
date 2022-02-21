@@ -39,7 +39,7 @@ const inputQueue = [];
 app.use(express.json());
 
 app.get("/rank", (req, res) => {
-    res.send(jsonFile);
+    res.send(jsonData);
 });
 
 app.post("/rank", (req, res) => {

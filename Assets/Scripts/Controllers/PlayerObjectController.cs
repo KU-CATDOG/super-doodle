@@ -60,8 +60,8 @@ namespace Controllers
         {
 #if UNITY_EDITOR
             Holder.MoveSpeed = corrected
-                ? Mathf.Min(Holder.MoveSpeed + 0.3f, maxMoveSpeed)
-                : Mathf.Max(Holder.MoveSpeed - 1f, 0);
+                ? Mathf.Min(Holder.MoveSpeed + Mathf.PI, maxMoveSpeed)
+                : Mathf.Max(Holder.MoveSpeed - Mathf.PI, 0);
             spriteController.SetAnimatiorParameter("Speed", Holder.MoveSpeed);
 #else
             // 이쪽이 빌드시 반영되는 수치
