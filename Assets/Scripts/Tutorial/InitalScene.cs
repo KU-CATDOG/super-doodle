@@ -13,6 +13,7 @@ public class InitalScene : MonoBehaviour
     [Header("GameObjects")]
     [SerializeField] private Transform groundTransform;
     [SerializeField] private TextMeshPro toPressTextMesh;
+    [SerializeField] private SpriteRenderer darkerRenderer;
 
     private KeyCode keyToPress;
 
@@ -26,7 +27,17 @@ public class InitalScene : MonoBehaviour
     {
         var gen = new RandomKeyGenerator();
         keyToPress = gen.GetKeyCode();
-        toPressTextMesh.text = gen.KeyCodeToString(keyToPress);
+        var keyText = gen.KeyCodeToString(keyToPress);
+        for (int i = 1; i < keyText.Length; ++i)
+        {
+            if (keyText[i] >= 'A')
+            {
+                keyText.Insert(i, "\n");
+                break;
+            }
+        }
+        toPressTextMesh.text = keyText;
+        StartCoroutine(DarkerControl(true));
     }
 
     private void Update()
@@ -49,6 +60,10 @@ public class InitalScene : MonoBehaviour
             // 몇가지의 애니메이션 후
             StartCoroutine(BeforeMoveScene("MenuScene"));
         }
+        else if (se.PressedKey == KeyCode.Escape)
+        {
+            StartCoroutine(DarkerControl(false));
+        }
     }
 
     private IEnumerator BeforeMoveScene(string moveTo)
@@ -56,5 +71,30 @@ public class InitalScene : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         SceneManager.LoadScene(moveTo);
+    }
+
+    private IEnumerator DarkerControl(bool turnOn)
+    {
+        float timer = 0;
+        while (timer < 1f)
+        {
+            timer += Time.deltaTime;
+            if (turnOn)
+            {
+                darkerRenderer.color = Color.Lerp(Color.black, Color.clear, timer);
+            }
+            else
+            {
+                darkerRenderer.color = Color.Lerp(Color.clear, Color.black, timer);
+            }
+            yield return null;
+        }
+        if (!turnOn)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
+            Application.Quit();
+        }
     }
 }
