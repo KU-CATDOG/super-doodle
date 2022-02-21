@@ -12,10 +12,12 @@ function saveRankDataToJson() {
 }
 
 /* Rank array control */
-function addToRankData() {
+let isAppendingData = false;
+function addToRankData(recursive) {
     if (inputQueue.length === 0) {
         return;
-    } else {
+    } else if (!isAppendingData || recursive) {
+        isAppendingData = true;
         let data = (inputQueue.splice(0, 1))[0];
         jsonData.ranks.push(data);
         jsonData.ranks.sort((a, b) => a.record - b.record);
@@ -23,8 +25,9 @@ function addToRankData() {
         if (inputQueue.length === 0) {
             saveRankDataToJson();
         } else {
-            addToRankData();
+            addToRankData(true);
         }
+        isAppendingData = false;
     }
 }
 
