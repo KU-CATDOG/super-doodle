@@ -8,6 +8,7 @@ namespace Test
     {
         BossSlime,
         BossHades,
+        BossJungle,
     }
 
     public class EarthTester : MonoBehaviour
@@ -78,6 +79,7 @@ namespace Test
         {
             Boss.BossSlime => new BossSlimeObjectController(),
             Boss.BossHades => new BossHadesObjectController(),
+            Boss.BossJungle => new BossJungleController(),
             _ => new BossSlimeObjectController(),
         };
     }
