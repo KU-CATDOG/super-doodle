@@ -8,9 +8,10 @@ namespace Controllers
     public class BossHadesObjectController : EarthObjectController
     {
         private int phase;
+
         private int hitCount;
 
-        private float timer;
+        private float startTime;
 
         private BossHadesMeteor meteorPrefab;
 
@@ -40,7 +41,7 @@ namespace Controllers
             MessageSystem.Instance.Subscribe<SingleKeyPressedEvent>(OnEvent);
 
             phase = 0;
-            timer = Time.time;
+            startTime = Time.time;
             recentMeteorTime = 0;
             hitCount = 0;
         }
@@ -83,7 +84,7 @@ namespace Controllers
 
         public override void OnUpdate()
         {
-            var now = Time.time - timer;
+            var now = Time.time - startTime;
 
             if (phase == 0 && now >= 10f)
             {
