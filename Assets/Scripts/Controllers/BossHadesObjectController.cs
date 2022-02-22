@@ -79,6 +79,7 @@ namespace Controllers
             if (player == null) return;
 
             // 스페이스가 눌릴 때마다 플레이어가 움직이는 방향을 바꿈
+            Holder.StartCoroutine(FlipPlayer(player.transform, player.MoveSpeed > 0));
             player.MoveSpeed = -player.MoveSpeed;
         }
 
@@ -124,5 +125,29 @@ namespace Controllers
             1 => 8,
             _ => 12,
         };
+
+        private IEnumerator FlipPlayer(Transform player, bool watchLeft)
+        {
+            float timer = 0;
+            float duration = 0.2f;
+            Transform childTransforms = player.GetChild(0);
+            while (timer < duration)
+            {
+                childTransforms.localRotation = Quaternion.Euler
+                    (
+                    childTransforms.localRotation.x,
+                    Mathf.Lerp(childTransforms.localRotation.y, watchLeft ? 180 : 360, timer / duration),
+                    childTransforms.localRotation.z
+                    );
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            childTransforms.localRotation = Quaternion.Euler
+                    (
+                    childTransforms.localRotation.x,
+                    watchLeft ? 180 : 0,
+                    childTransforms.localRotation.z
+                    );
+        }
     }
 }
