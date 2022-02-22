@@ -26,14 +26,9 @@ public class Menu : MonoBehaviour
 
     Quaternion angle = Quaternion.Euler(0, 0, 0);
     float curAngle = 0f;
-<<<<<<< HEAD
     Vector2 start;
-=======
-
-
 
     public bool moving = false;
->>>>>>> 955120fa5be81336b026e8bd71976269695a32fa
 
     void Start()
     {
@@ -41,13 +36,9 @@ public class Menu : MonoBehaviour
         key = gen.GetKeyCode();
         // key = EarthKeyGenerator.KeyGenerator.GetKeyCode();
         nextKey.text = EarthKeyGenerator.KeyGenerator.KeyCodeToString(key);
-
-<<<<<<< HEAD
         start = player.position;
-=======
         GameManager.Inst.gameState = GameManager.GameState.Menu;
 
->>>>>>> 955120fa5be81336b026e8bd71976269695a32fa
     }
 
     void Update()
@@ -60,11 +51,7 @@ public class Menu : MonoBehaviour
         {
             SceneManager.LoadScene("InitialScene");
         }
-
-<<<<<<< HEAD
-=======
         if (Input.GetKeyDown(key) && !inSetting)
->>>>>>> 955120fa5be81336b026e8bd71976269695a32fa
         {
             // 플레이어 이동
             rotateSpeed += 0.01f;
@@ -77,7 +64,6 @@ public class Menu : MonoBehaviour
             nextKey.text = EarthKeyGenerator.KeyGenerator.KeyCodeToString(key);
         }
 
-<<<<<<< HEAD
         curAngle = GetAngle(start, end);
 
         //if 버튼에 도착할 경우
@@ -106,7 +92,6 @@ public class Menu : MonoBehaviour
             }
         }
             
-=======
         //if 버튼에 도착할 경우
         //초기 위치에서 90도, 180도, 270도
         if (Input.GetKeyDown(KeyCode.Space))
@@ -118,8 +103,6 @@ public class Menu : MonoBehaviour
             }
         }
 
-
->>>>>>> 955120fa5be81336b026e8bd71976269695a32fa
     }
 
     float GetAngle(Vector2 start, Vector2 end)
@@ -138,10 +121,7 @@ public class Menu : MonoBehaviour
             yield return null;
         }
         moving = false;
-<<<<<<< HEAD
     }*/
-=======
-    }
 
     #region KeySettings
     public void ToggleAnKey(bool boolean)
@@ -167,5 +147,4 @@ public class Menu : MonoBehaviour
         settings.SetActive(false);
         inSetting = false;
     }
->>>>>>> 955120fa5be81336b026e8bd71976269695a32fa
 }
