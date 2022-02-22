@@ -62,9 +62,8 @@ public class Menu : MonoBehaviour
         }
 
 <<<<<<< HEAD
-        if (Input.GetKeyDown(key))
 =======
-        if (Input.GetKeyDown(key) && !moving && !inSetting)
+        if (Input.GetKeyDown(key) && !inSetting)
 >>>>>>> 955120fa5be81336b026e8bd71976269695a32fa
         {
             // 플레이어 이동
