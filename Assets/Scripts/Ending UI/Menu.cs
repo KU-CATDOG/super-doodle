@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Tool;
 using TMPro;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
@@ -18,8 +19,15 @@ public class Menu : MonoBehaviour
 
     [SerializeField] GameObject playerObject;
 
+    [SerializeField] GameObject settings;
+    [SerializeField] Button save;
+
+    bool inSetting = false;
+
     Quaternion angle = Quaternion.Euler(0, 0, 0);
     float curAngle = 0f;
+
+
 
     public bool moving = false;
 
@@ -29,6 +37,9 @@ public class Menu : MonoBehaviour
         key = gen.GetKeyCode();
         // key = EarthKeyGenerator.KeyGenerator.GetKeyCode();
         nextKey.text = EarthKeyGenerator.KeyGenerator.KeyCodeToString(key);
+
+        GameManager.Inst.gameState = GameManager.GameState.Menu;
+
     }
 
     void Update()
@@ -38,7 +49,7 @@ public class Menu : MonoBehaviour
             SceneManager.LoadScene("InitialScene");
         }
 
-        if (Input.GetKeyDown(key) && !moving)
+        if (Input.GetKeyDown(key) && !moving && !inSetting)
         {
             moving = true;
             // 플레이어 이동
@@ -49,11 +60,19 @@ public class Menu : MonoBehaviour
             key = EarthKeyGenerator.KeyGenerator.GetKeyCode();
             nextKey.text = EarthKeyGenerator.KeyGenerator.KeyCodeToString(key);
         }
-        
-            //if 버튼에 도착할 경우
-            //초기 위치에서 90도, 180도, 270도
-            //if (Input.GetKeyDown(KeyCode.Space)) -> 해당 씬으로 이동
-  
+
+        //if 버튼에 도착할 경우
+        //초기 위치에서 90도, 180도, 270도
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (player.rotation == Quaternion.Euler(0, 0, -90))
+            {
+                settings.SetActive(true);
+                inSetting = true;
+            }
+        }
+
+
     }
 
     IEnumerator RotatePlayer(Quaternion angle)
@@ -66,5 +85,30 @@ public class Menu : MonoBehaviour
             yield return null;
         }
         moving = false;
+    }
+
+    #region KeySettings
+    public void ToggleAnKey(bool boolean)
+    {
+        GameManager.Inst.an = boolean;
+    }
+    public void ToggleFnKey(bool boolean)
+    {
+        GameManager.Inst.fn = boolean;
+    }
+    public void ToggleControlKey(bool boolean)
+    {
+        GameManager.Inst.cn = boolean;
+    }
+    public void ToggleKeypadKey(bool boolean)
+    {
+        GameManager.Inst.keypad = boolean;
+    }
+    #endregion
+
+    public void CloseSettings()
+    {
+        settings.SetActive(false);
+        inSetting = false;
     }
 }
