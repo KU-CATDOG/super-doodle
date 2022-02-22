@@ -12,6 +12,7 @@ namespace Controllers
 
         private BossJungleBanana bananaPrefab;
         private BossJunglePineApple pineApplePrefab;
+        private BossJunglePeach peachPrefab;
 
         protected override float InvincibleSecond => 3;
 
@@ -34,6 +35,11 @@ namespace Controllers
             yield return AssetLoaderManager.Inst.LoadPrefabAsync<GameObject>("Misc/JunglePineApple", x =>
             {
                 pineApplePrefab = x.GetComponent<BossJunglePineApple>();
+            });
+
+            yield return AssetLoaderManager.Inst.LoadPrefabAsync<GameObject>("Misc/JunglePeach", x =>
+            {
+                peachPrefab = x.GetComponent<BossJunglePeach>();
             });
         }
 
@@ -106,11 +112,18 @@ namespace Controllers
             }
             if (phase == 2)
             {
-                // 복숭아
+                if (now - recentPeachTime < 3f) return;
+
+                var newPeach = Object.Instantiate(peachPrefab);
+                newPeach.Init(Holder);
+                newPeach.transform.localPosition = Holder.Controller.ResourceWorldPos;
+
+                recentPeachTime = now;
             }
         }
 
         private float recentBananaTime;
         private float recentPineAppleTime;
+        private float recentPeachTime;
     }
 }
