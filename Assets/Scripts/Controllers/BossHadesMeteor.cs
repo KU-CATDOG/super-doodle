@@ -14,7 +14,10 @@ namespace Controllers
         {
             foreach (var i in allMeteor)
             {
-                Destroy(i.gameObject);
+                if (i != null)
+                {
+                    Destroy(i.gameObject);
+                }
             }
 
             allMeteor.Clear();
