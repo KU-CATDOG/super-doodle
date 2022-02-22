@@ -96,7 +96,7 @@ public class RankController : MonoBehaviour
         //응답을 받았습니다.
         if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
         {
-            Debug.LogWarning(request.downloadHandler.error);
+            Debug.LogWarning(request.error);
         }
         else
         {

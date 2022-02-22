@@ -63,6 +63,8 @@ namespace Controllers
             hitCount++;
             if (hitCount == 2)
             {
+                GameManager.Inst.gameState = GameManager.GameState.EndGame;
+                GameManager.Inst.isRecentGameWin = true;
                 UnloadResources();
                 Object.Destroy(Holder.gameObject);
                 SceneManager.LoadScene("ResultScene");
