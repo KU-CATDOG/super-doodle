@@ -6,6 +6,8 @@ public class GameManager : SingletonBehavior<GameManager>
 {
     public float tempTimer = 0;
 
+    public bool an = true, fn = true, cn = true, keypad = true;
+
     public enum GameState
     {
         Menu,

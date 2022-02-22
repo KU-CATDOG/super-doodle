@@ -39,7 +39,33 @@ namespace Tool
             List<KeyCode> keyCodes = new List<KeyCode>();
             //Escape와 Space는 사용 금지 - 기믹용/일시정지용 특수키
 
-            keyCodes.AddRange(new KeyCode[] {
+            if (GameManager.Inst.cn)
+            {
+                keyCodes.AddRange(new KeyCode[] {
+                // 기타 아래 안들어가는거
+                KeyCode.Delete,
+                KeyCode.Numlock,
+                KeyCode.CapsLock,
+                KeyCode.ScrollLock,
+                KeyCode.SysReq, // PrintScreen
+                //KeyCode.Pause,
+            });
+            }        
+
+            if (GameManager.Inst.an)
+            {
+                // 알파벳
+                for (var i = KeyCode.A; i <= KeyCode.Z; ++i)
+                {
+                    keyCodes.Add(i);
+                }
+                // 상단 숫자버튼들
+                for (var i = KeyCode.Alpha0; i <= KeyCode.Alpha9; ++i)
+                {
+                    keyCodes.Add(i);
+                }
+
+                keyCodes.AddRange(new KeyCode[] {
                 // 좌측 기능키
                 KeyCode.Tab,
                 KeyCode.CapsLock,
@@ -66,34 +92,27 @@ namespace Tool
                 KeyCode.Minus, // -
                 KeyCode.Equals, // =
                 KeyCode.Backspace,
-
-                // 기타 아래 안들어가는거
-                KeyCode.Delete,
-                KeyCode.Numlock,
-                KeyCode.CapsLock,
-                KeyCode.ScrollLock,
-                KeyCode.SysReq, // PrintScreen
-                //KeyCode.Pause,
-            }) ;
-            
-            // 상단 숫자버튼들
-            for (var i = KeyCode.Alpha0; i <= KeyCode.Alpha9; ++i)
-            {
-                keyCodes.Add(i);
+            });
             }
 
-            // 알파벳
-            for (var i = KeyCode.A; i <= KeyCode.Z; ++i)
+            if (GameManager.Inst.keypad)
             {
-                keyCodes.Add(i);
+                // 키패드
+                for (var i = KeyCode.Keypad0; i <= KeyCode.Keypad9; ++i)
+                {
+                    keyCodes.Add(i);
+                }
+            }
+
+            if (GameManager.Inst.fn)
+            {
+                for (var i = KeyCode.F1; i <= KeyCode.F12; ++i)
+                {
+                    keyCodes.Add(i);
+                }
             }
             
-            // 키패드
-            for (var i = KeyCode.Keypad0; i <= KeyCode.F12; ++i)
-            {
-                keyCodes.Add(i);
-            }
-            keyCodes.Remove(KeyCode.KeypadEquals);
+
 
             return keyCodes;
         }
