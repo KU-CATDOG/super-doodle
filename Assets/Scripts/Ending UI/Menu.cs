@@ -67,30 +67,31 @@ public class Menu : MonoBehaviour
         curAngle = GetAngle(start, end);
 
         //if 버튼에 도착할 경우
-        if (curAngle % 180 >= 42.5 || curAngle % 180 <= 47.5)
+        if (curAngle % 180 >= 42.5 && curAngle % 180 <= 47.5)
         {
-            space.text = "Space";
+            space.text = "Press Space";
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 // SceneManager.LoadScene("Setting");
             }
         }
-        else if (curAngle % 180 >= 87.5 || curAngle % 180 <= 92.5)
+        else if (curAngle % 180 >= 87.5 && curAngle % 180 <= 92.5)
         {
-            space.text = "Space";
+            space.text = "Press Space";
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene("MapSelect");
             }
         }
-        else if (curAngle % 180 >= 132.5 || curAngle % 180 <= 137.5)
+        else if (curAngle % 180 >= 132.5 && curAngle % 180 <= 137.5)
         {
-            space.text = "Space";
+            space.text = "Press Space";
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 // SceneManager.LoadScene("Credit");
             }
         }
+        else { space.text = ""; }
             
         //if 버튼에 도착할 경우
         //초기 위치에서 90도, 180도, 270도
