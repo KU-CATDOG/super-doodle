@@ -72,7 +72,8 @@ public class Menu : MonoBehaviour
             space.text = "Press Space";
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                // SceneManager.LoadScene("Setting");
+                settings.SetActive(true);
+                inSetting = true;
             }
         }
         else if (curAngle % 180 >= 87.5 && curAngle % 180 <= 92.5)
@@ -92,17 +93,6 @@ public class Menu : MonoBehaviour
             }
         }
         else { space.text = ""; }
-            
-        //if 버튼에 도착할 경우
-        //초기 위치에서 90도, 180도, 270도
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (player.rotation == Quaternion.Euler(0, 0, -90))
-            {
-                settings.SetActive(true);
-                inSetting = true;
-            }
-        }
 
     }
 
@@ -142,6 +132,11 @@ public class Menu : MonoBehaviour
         GameManager.Inst.keypad = boolean;
     }
     #endregion
+
+    public void UpdatePool()
+    {
+        
+    }
 
     public void CloseSettings()
     {

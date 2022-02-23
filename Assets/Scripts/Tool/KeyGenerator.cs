@@ -17,11 +17,13 @@ namespace Tool
         {
             get
             {
-                if (_usableKeys == null)
-                {
-                    _usableKeys = InitUsableKeys();
-                }
-                return _usableKeys;
+                //if (_usableKeys == null)
+                //{
+                //    _usableKeys = InitUsableKeys();
+                //}
+                //return _usableKeys;
+
+                return InitUsableKeys();
             }
         }
 
@@ -149,7 +151,7 @@ namespace Tool
 
     public class RandomKeyGenerator : IKeyGenerator
     {
-        private readonly List<KeyCode> pool;
+        private List<KeyCode> pool;
 
         public IReadOnlyCollection<KeyCode> CandidatePool => pool;
 
@@ -158,7 +160,12 @@ namespace Tool
             pool = new List<KeyCode>(KeysUsed.UsableKeys);
         }
 
-        public KeyCode GetKeyCode() => pool[Random.Range(0, pool.Count)];
+        //public KeyCode GetKeyCode() => pool[Random.Range(0, pool.Count)];
+        public KeyCode GetKeyCode() 
+        {
+            pool = new List<KeyCode>(KeysUsed.UsableKeys);
+            return pool[Random.Range(0, pool.Count)];
+        } 
 
         public string KeyCodeToString(KeyCode key) => key switch
         {
