@@ -19,7 +19,7 @@ public class BestRecord : MonoBehaviour
             best_time_record = cur_record;
         }
         
-        bestrecord.text = "Best Record: " + (best_time_record != 0 ? best_time_record.ToString("N2") : "--:--");
+        bestrecord.text = "Best: " + (best_time_record != 0 ? best_time_record.ToString("N2") : "--:--");
     }
 }
 
