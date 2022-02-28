@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Tutorial.unity
     guid: b2b1272bdecd76e4db62424e702d4444
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/InitialScene.unity
+    guid: d9d5800bf22511f4a83ba73cec81531b
+  - enabled: 1
+    path: Assets/Scenes/MenuScene.unity
+    guid: 6dbea59abf51cf2478e92ddba6c6a83e
   - enabled: 1
     path: Assets/Scenes/MapSelect.unity
     guid: 3d2e4883c0edc9c45b4c643ef7ad2e05
@@ -18,16 +27,10 @@ EditorBuildSettings:
     path: Assets/Scenes/BossHades.unity
     guid: 9037b3857c1c4b148a1588b300f9a5af
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/BossJungle.unity
+    guid: 2d245a3edd2154445a9a18023b8e51fd
   - enabled: 1
     path: Assets/Scenes/ResultScene.unity
     guid: 938e97857f37b814bbbd0e3c4d3c7f9e
-  - enabled: 1
-    path: Assets/Scenes/MenuScene.unity
-    guid: 6dbea59abf51cf2478e92ddba6c6a83e
-  - enabled: 1
-    path: Assets/Scenes/InitialScene.unity
-    guid: d9d5800bf22511f4a83ba73cec81531b
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: f1fc67cb875f4a24f87def8c4d38f4f9, type: 2}
