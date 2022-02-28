@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Node : MonoBehaviour
 {
+    public bool isPlayerOn = false;
 
     [Header("Node Destinations")]
     public GameObject upDestination;
@@ -20,16 +21,21 @@ public class Node : MonoBehaviour
     [SerializeField]
     private int mapIndex;
 
+    public Vector3 offset = new Vector3();
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (isPlayerOn)
+        {
+            offset = player.transform.position - transform.localPosition;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (transform.localPosition == player.transform.position)
+        if (isPlayerOn)
         {
             currNode = true;
         }
@@ -97,10 +103,14 @@ public class Node : MonoBehaviour
 
     IEnumerator MoveToward(Destination destination)
     {
-        while (player.transform.position != destination().transform.localPosition)
+        isPlayerOn = false;
+        while (player.transform.position - offset != destination().transform.localPosition)
         {
-            player.transform.position = Vector3.MoveTowards(player.transform.position, destination().transform.localPosition, 8f * Time.deltaTime);
+            player.transform.position = Vector3.MoveTowards(player.transform.position, destination().transform.localPosition + offset, 8f * Time.deltaTime);
             yield return null;
         }
+        var nextNode = destination().GetComponent<Node>();
+        nextNode.isPlayerOn = true;
+        nextNode.offset = offset;
     }
 }
