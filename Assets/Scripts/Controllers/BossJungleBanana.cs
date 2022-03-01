@@ -40,11 +40,11 @@ namespace Controllers
             Destroy(gameObject);
         }
 
-        public static IEnumerator DodgeBanana()
+        public static IEnumerator DodgeBanana(float dodgeTime)
         {
             isPlayerDodging = true;
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(dodgeTime);
 
             isPlayerDodging = false;
         }

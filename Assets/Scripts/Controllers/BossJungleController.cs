@@ -20,6 +20,8 @@ namespace Controllers
 
         protected override bool AttackEnabled => true;
 
+        private float lastDodgeTime = 0;
+
         protected override IEnumerator LoadResources()
         {
             yield return AssetLoaderManager.Inst.LoadPrefabAsync<GameObject>("EarthObjects/Jungle", x =>
@@ -65,7 +67,11 @@ namespace Controllers
             {
                 yield return new WaitForFixedUpdate();
                 //Debug.Log(obj.position);
-                obj.localPosition = new Vector3(obj.localPosition.x, Mathf.PingPong(Time.time, 1) + 3, obj.localPosition.z);
+
+                float x = Time.time * 3 % 3;
+                float y = x < 2 ? x : -2 * x + 6;
+
+                obj.localPosition = new Vector3(obj.localPosition.x, y + 3, obj.localPosition.z);
 
             }
         }
@@ -91,15 +97,11 @@ namespace Controllers
         private void OnEvent(IEvent e)
         {
             if (!(e is SingleKeyPressedEvent { PressedKey: KeyCode.Space })) return;
+            if (Time.time - lastDodgeTime < 1f) return;
 
-            if (phase == 0)
-            {
-                Holder.StartCoroutine(BossJungleBanana.DodgeBanana());
-            }
-            if (phase == 1)
-            {
-                Holder.StartCoroutine(BossJunglePineApple.DodgePineApple());
-            }
+            lastDodgeTime = Time.time;
+            Holder.StartCoroutine(BossJungleBanana.DodgeBanana(0.5f));
+            Holder.StartCoroutine(BossJunglePineApple.DodgePineApple(0.5f));
         }
 
         public override void OnUpdate()
