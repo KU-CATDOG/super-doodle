@@ -31,8 +31,15 @@ public class BestRecord : MonoBehaviour
             int idx = 0;
             foreach (var rank in res)
             {
-                bestRecordNameTexts[idx].text = rank.name;
-                bestRecordTexts[idx++].text = $"{(rank.record / 1000f):N2}";
+                if (rank != null)
+                {
+                    bestRecordNameTexts[idx].text = rank.name;
+                    bestRecordTexts[idx++].text = $"{(rank.record / 1000f):N2}";
+                }
+                else
+                {
+                    bestRecordTexts[idx++].text = $"-";
+                }
             }
         });
     }
