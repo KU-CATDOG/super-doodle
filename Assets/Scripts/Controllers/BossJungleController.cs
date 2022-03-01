@@ -52,6 +52,22 @@ namespace Controllers
             phase = 0;
             startTime = Time.time;
             recentBananaTime = 0f;
+
+            Holder.StartCoroutine(Oscillate());
+        }
+
+        private IEnumerator Oscillate()
+        {
+            yield return new WaitForSeconds(1);
+
+            Transform obj = Holder.transform.GetChild(0);
+            while (Holder.gameObject)
+            {
+                yield return new WaitForFixedUpdate();
+                //Debug.Log(obj.position);
+                obj.localPosition = new Vector3(obj.localPosition.x, Mathf.PingPong(Time.time, 1) + 3, obj.localPosition.z);
+
+            }
         }
 
         protected override void OnDetached()
