@@ -52,6 +52,35 @@ public class RankController : MonoBehaviour
         }));
     }
 
+    public void GetRanks(int myScore, Action<ResRank[]> then = null)
+    {
+        StartCoroutine(Get("rank", () =>
+        {
+            ResRank[] newResult = new ResRank[6];
+            int rankIdx = 0;
+            while (rankIdx < getResult.ranks.Length)
+            {
+                if (getResult.ranks[rankIdx].record <= myScore)
+                {
+                    rankIdx++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            // -3 -2 -1 myScore 0 1 2
+            newResult[0] = rankIdx - 3 >= 0 ? getResult.ranks[rankIdx - 3] : null;
+            newResult[1] = rankIdx - 2 >= 0 ? getResult.ranks[rankIdx - 2] : null;
+            newResult[2] = rankIdx - 1 >= 0 ? getResult.ranks[rankIdx - 1] : null;
+            newResult[3] = rankIdx     < getResult.ranks.Length ? getResult.ranks[rankIdx] : null;
+            newResult[4] = rankIdx + 1 < getResult.ranks.Length ? getResult.ranks[rankIdx + 1] : null;
+            newResult[5] = rankIdx + 2 < getResult.ranks.Length ? getResult.ranks[rankIdx + 2] : null;
+
+            then?.Invoke(newResult);
+        }));
+    }
+
     private IEnumerator Get(string uri="", Action then = null)
     {
         yield return new WaitForSecondsRealtime(0.5f);

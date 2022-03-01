@@ -10,6 +10,11 @@ public class BestRecord : MonoBehaviour
     private float cur_record;
     private static float best_time_record = 0;
 
+    [Header("TopRecords")]
+    public RankController rankController;
+    [SerializeField] private TextMeshPro[] bestRecordNameTexts;
+    [SerializeField] private TextMeshPro[] bestRecordTexts;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +25,16 @@ public class BestRecord : MonoBehaviour
         }
         
         bestrecord.text = "Best: " + (best_time_record != 0 ? best_time_record.ToString("N2") : "--:--");
+
+        rankController.GetRanks(0, 3, res =>
+        {
+            int idx = 0;
+            foreach (var rank in res)
+            {
+                bestRecordNameTexts[idx].text = rank.name;
+                bestRecordTexts[idx++].text = $"{(rank.record / 1000f):N2}";
+            }
+        });
     }
 }
 

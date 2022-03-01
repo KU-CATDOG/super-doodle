@@ -9,7 +9,7 @@ public class TimeRecord : MonoBehaviour
     [SerializeField]
     private TextMeshPro record;
     [SerializeField]
-    private TextMeshPro ranks;
+    private TextMeshPro[] ranks;
 
     // Start is called before the first frame update
     void Start()
@@ -23,35 +23,31 @@ public class TimeRecord : MonoBehaviour
             toSend.name = "TESTNAME";
             toSend.record = Mathf.FloorToInt(timeSecond * 1000);
             toSend.stage = (int)GameManager.Inst.currentBoss;
-            rankController.SendScore(toSend, () =>
+            rankController.GetRanks(toSend.record, (res) =>
             {
-                rankController.GetRanks(0, 8, (res) =>
+                int idx = 0;
+                foreach (var rank in res)
                 {
-                    ranks.text = "";
-                    foreach (var rank in res)
+                    if (rank != null)
                     {
-                        if (rank != null)
-                        {
-                            ranks.text += $"{rank.name} : {(rank.record / 1000f):N2}\n";
-                        }
+                        ranks[idx++].text = $"{rank.name} : {(rank.record / 1000f):N2}\n";
                     }
+                }
+
+                rankController.SendScore(toSend, () =>
+                {
+
                 });
             });
         }
         else
         {
             record.text = "Record: --:--";
-            rankController.GetRanks(0, 8, (res) =>
+            foreach (var rank in ranks)
             {
-                ranks.text = "";
-                foreach (var rank in res)
-                {
-                    if (rank != null)
-                    {
-                        ranks.text += $"{rank.name} : {(rank.record / 1000f):N2}\n";
-                    }
-                }
-            });
+                rank.text = "";
+            }
+            ranks[3].text = "FAILED...";
         }
     }
 
