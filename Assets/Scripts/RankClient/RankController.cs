@@ -43,6 +43,8 @@ public class RankController : MonoBehaviour
     {
         StartCoroutine(Get("rank", () =>
         {
+            CutOutOtherBoss(stage);
+
             ResRank[] newResult = new ResRank[length];
             for (int i = from; i - from < Mathf.Min(length, getResult.ranks.Length); ++i)
             {
@@ -56,6 +58,8 @@ public class RankController : MonoBehaviour
     {
         StartCoroutine(Get("rank", () =>
         {
+            CutOutOtherBoss(stage);
+
             ResRank[] newResult = new ResRank[6];
             int rankIdx = 0;
             while (rankIdx < getResult.ranks.Length)
@@ -132,5 +136,20 @@ public class RankController : MonoBehaviour
             //Debug.Log(request.downloadHandler.isDone);
             then?.Invoke();
         }
+    }
+
+    private void CutOutOtherBoss(int boss)
+    {
+        List<ResRank> result = new List<ResRank>();
+
+        for (int i = 0; i < getResult.ranks.Length; ++i)
+        {
+            if (getResult.ranks[i].stage == boss)
+            {
+                result.Add(getResult.ranks[i]);
+            }
+        }
+
+        getResult.ranks = result.ToArray();
     }
 }

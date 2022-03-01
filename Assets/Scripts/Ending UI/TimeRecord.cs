@@ -42,11 +42,14 @@ public class TimeRecord : MonoBehaviour
                 {
                     if (rank != null)
                     {
-                        if (idx != 3)
+                        Debug.Log($"{rank.name}, {idx}");
+                        if (idx == 3)
                         {
-                            ranks[idx++].text = $"{rank.name} : {(rank.record / 1000f):N2}";
+                            idx++;
                         }
+                        ranks[idx].text = $"{rank.name} : {(rank.record / 1000f):N2}";
                     }
+                    idx++;
                 }
             });
         }
@@ -76,7 +79,7 @@ public class TimeRecord : MonoBehaviour
         };
         rankController.SendScore(toSend, () =>
         {
-            ranks[3].text = $"{toSend.name} : {toSend.record:N2}";
+            ranks[3].text = $"{toSend.name} : {(toSend.record / 1000f):N2}";
         });
     }
 }
