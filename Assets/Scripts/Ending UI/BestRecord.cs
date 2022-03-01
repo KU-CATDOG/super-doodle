@@ -26,7 +26,7 @@ public class BestRecord : MonoBehaviour
         
         bestrecord.text = "Best: " + (best_time_record != 0 ? best_time_record.ToString("N2") : "--:--");
 
-        rankController.GetRanks(0, 3, res =>
+        rankController.GetRanks((int)GameManager.Inst.currentBoss, 0, 3, res =>
         {
             int idx = 0;
             foreach (var rank in res)

@@ -39,7 +39,7 @@ public class RankController : MonoBehaviour
         StartCoroutine(Post("rank", JsonUtility.ToJson(score), then));
     }
 
-    public void GetRanks(int from, int length, Action<ResRank[]> then = null)
+    public void GetRanks(int stage, int from, int length, Action<ResRank[]> then = null)
     {
         StartCoroutine(Get("rank", () =>
         {
@@ -52,7 +52,7 @@ public class RankController : MonoBehaviour
         }));
     }
 
-    public void GetRanks(int myScore, Action<ResRank[]> then = null)
+    public void GetRanks(int stage, int myScore, Action<ResRank[]> then = null)
     {
         StartCoroutine(Get("rank", () =>
         {

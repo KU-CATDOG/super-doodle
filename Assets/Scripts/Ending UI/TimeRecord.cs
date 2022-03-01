@@ -23,7 +23,7 @@ public class TimeRecord : MonoBehaviour
             float timeSecond = endTime - GameManager.Inst.tempTimer;
             record.text = $"Record: {timeSecond:N2}";
 
-            rankController.GetRanks(Mathf.FloorToInt(timeSecond * 1000), (res) =>
+            rankController.GetRanks((int)GameManager.Inst.currentBoss, Mathf.FloorToInt(timeSecond * 1000), (res) =>
             {
                 for (int i = 0; i < ranks.Length; ++i)
                 {
@@ -33,7 +33,7 @@ public class TimeRecord : MonoBehaviour
                     }
                     else
                     {
-                        ranks[i].text = $"YOU : {timeSecond:N2}";
+                        ranks[i].text = $"*YOU* : {timeSecond:N2}";
                     }
                 }
 
@@ -44,7 +44,7 @@ public class TimeRecord : MonoBehaviour
                     {
                         if (idx != 3)
                         {
-                            ranks[idx++].text = $"{rank.name} : {(rank.record / 1000f):N2}\n";
+                            ranks[idx++].text = $"{rank.name} : {(rank.record / 1000f):N2}";
                         }
                     }
                 }
@@ -74,6 +74,9 @@ public class TimeRecord : MonoBehaviour
             record = Mathf.FloorToInt((endTime - GameManager.Inst.tempTimer) * 1000),
             stage = (int)GameManager.Inst.currentBoss
         };
-        rankController.SendScore(toSend);
+        rankController.SendScore(toSend, () =>
+        {
+            ranks[3].text = $"{toSend.name} : {toSend.record:N2}";
+        });
     }
 }
