@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class TimeRecord : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class TimeRecord : MonoBehaviour
     [SerializeField] private TextMeshPro record;
     [SerializeField] private TextMeshPro[] ranks;
     [SerializeField] private TextMeshProUGUI submitName;
+    [SerializeField] private Button submitButton;
 
     [SerializeField] private GameObject[] toHideOnDefeat;
 
@@ -80,6 +82,7 @@ public class TimeRecord : MonoBehaviour
         rankController.SendScore(toSend, () =>
         {
             ranks[3].text = $"{toSend.name} : {(toSend.record / 1000f):N2}";
+            submitButton.interactable = false;
         });
     }
 }

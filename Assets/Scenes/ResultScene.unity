@@ -3147,6 +3147,7 @@ MonoBehaviour:
   - {fileID: 289836258}
   - {fileID: 1607695880}
   submitName: {fileID: 91530075}
+  submitButton: {fileID: 1106137643}
   toHideOnDefeat:
   - {fileID: 849098504}
 --- !u!1 &1598337759
