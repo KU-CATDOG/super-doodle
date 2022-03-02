@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Controllers
 {
-    public class BossJungleController : EarthObjectController
+    public class BossJungleObjectController : EarthObjectController
     {
         private int phase;
 

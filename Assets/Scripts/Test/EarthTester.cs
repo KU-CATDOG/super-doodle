@@ -79,7 +79,7 @@ namespace Test
         {
             Boss.BossSlime => new BossSlimeObjectController(),
             Boss.BossHades => new BossHadesObjectController(),
-            Boss.BossJungle => new BossJungleController(),
+            Boss.BossJungle => new BossJungleObjectController(),
             _ => new BossSlimeObjectController(),
         };
     }
