@@ -44,6 +44,24 @@ namespace Controllers
             startTime = Time.time;
             recentMeteorTime = 0;
             hitCount = 0;
+
+            Holder.StartCoroutine(Fly());
+        }
+
+        private IEnumerator Fly()
+        {
+            yield return new WaitForSeconds(1f);
+
+            Transform obj = Holder.transform.GetChild(0);
+
+            obj.localPosition = new Vector3(obj.localPosition.x, 3.6f, obj.localPosition.z);
+
+            while (Holder.gameObject)
+            {
+                yield return new WaitForFixedUpdate();
+
+                obj.localPosition = new Vector3(obj.localPosition.x, Mathf.PingPong(Time.time, 0.2f) + 3.5f, obj.localPosition.z);
+            }
         }
 
         protected override void OnDetached()
