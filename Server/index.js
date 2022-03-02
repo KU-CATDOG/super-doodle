@@ -1,5 +1,8 @@
 import express from 'express';
+import path from 'path';
 import { readFileSync, writeFileSync } from 'fs';
+
+const __dirname = path.resolve();
 
 /* Rank file load */
 const fileName = './ranks.json';
@@ -37,6 +40,11 @@ const PORT = 5454;
 const inputQueue = [];
 
 app.use(express.json());
+app.use(express.static(__dirname + "/BasicSite"));
+
+app.get("", (req, res) => {
+    res.sendFile(__dirname + "/BasicSite/index.html");
+});
 
 app.get("/rank", (req, res) => {
     res.send(jsonData);
