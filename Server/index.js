@@ -23,7 +23,15 @@ function addToRankData(recursive) {
         isAppendingData = true;
         let data = (inputQueue.splice(0, 1))[0];
         jsonData.ranks.push(data);
-        jsonData.ranks.sort((a, b) => a.record - b.record);
+        jsonData.ranks.sort((a, b) => {
+            if (a.stage != b.stage) {
+                return a.stage - b.stage;
+            }
+            if (a.record != b.record) {
+                return a.record - b.record;
+            }
+            return a.timeStamp - b.timeStamp;
+        });
 
         if (inputQueue.length === 0) {
             saveRankDataToJson();
