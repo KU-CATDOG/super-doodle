@@ -121,7 +121,7 @@ namespace Controllers
             if (now - recentMeteorTime < MeteorCooltime) return;
 
             var newMeteor = Object.Instantiate(meteorPrefab);
-            newMeteor.Init(Holder.Earth.Player, MeteorSpeed);
+            newMeteor.Init(Holder.Earth.Player, MeteorSpeed, MeteorSize);
 
             var xRange = Holder.Earth.Radius + 1;
             var x = xRange * (2 * Random.value - 1);
@@ -144,6 +144,12 @@ namespace Controllers
             0 => 4,
             1 => 8,
             _ => 12,
+        };
+
+        private float MeteorSize => phase switch
+        {
+            0 => 1f,
+            _ => 0.5f
         };
 
         private IEnumerator FlipPlayer(Transform player, bool watchLeft)

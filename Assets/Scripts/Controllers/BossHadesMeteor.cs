@@ -12,26 +12,20 @@ namespace Controllers
 
         public static void DestroyAll()
         {
-            foreach (var i in allMeteor)
-            {
-                if (i != null)
-                {
-                    Destroy(i.gameObject);
-                }
-            }
-
             allMeteor.Clear();
         }
 
         private EarthObject targetPlayer;
         private float moveSpeed;
 
-        private const float CollisionDistance = 1f;
+        private float CollisionDistance;
 
-        public void Init(EarthObject target, float speed)
+        public void Init(EarthObject target, float speed, float size)
         {
             targetPlayer = target;
             moveSpeed = speed;
+            CollisionDistance = size;
+            GetComponent<SpriteController>().SetSprite(size > 0.5f ? 0 : 1);
         }
 
         private void Awake()
