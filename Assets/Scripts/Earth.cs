@@ -37,6 +37,10 @@ public class Earth : MonoBehaviour
     private (KeyCode key, IReadOnlyCollection<KeyCode> pool) currentKey;
     private (KeyCode key, IReadOnlyCollection<KeyCode> pool) nextKey;
 
+    [Header("arts")]
+    [SerializeField]
+    private List<GameObject> stageArts = new List<GameObject>();
+
     // 충돌 탐지를 위해서 이 땅을 몇 구획으로 쪼갤 것인가
     private const int CollisionSystemDivisionNum = 12;
 
@@ -55,6 +59,8 @@ public class Earth : MonoBehaviour
     private void Start()
     {
         objectSprite.localScale = Vector3.one * Radius * 2;
+        stageArts[(int)GameManager.Inst.currentBoss].SetActive(true);
+        stageArts[(int)GameManager.Inst.currentBoss].transform.localScale = Vector3.one * Radius * 2;
         UpdateKeyCode();
         GameManager.Inst.tempTimer = Time.time;
     }
