@@ -1191,7 +1191,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -1591,7 +1591,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 788331894}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0143, y: 0.0058, z: 0}
+  m_LocalPosition: {x: -0.0143, y: 0.0058, z: 1}
   m_LocalScale: {x: 0.92725176, y: 0.9234993, z: 1}
   m_Children: []
   m_Father: {fileID: 326171690}
@@ -1970,7 +1970,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9d43d88bb5f0ae047a09778fc593cae3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60f2f0ae8f3c9484489fd35a64e25fca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1989,8 +1989,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915116312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: -0.02, z: -2.73}
-  m_LocalScale: {x: 1.7979, y: 1.7979, z: 1.7979}
+  m_LocalPosition: {x: -0.02, y: -0.04, z: -2.73}
+  m_LocalScale: {x: 1.2729132, y: 1.2729132, z: 1.2729132}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
@@ -3013,7 +3013,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Key
+  m_text: kEY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5478c7e424dacef408985dc6d0605acd, type: 2}
   m_sharedMaterial: {fileID: 2627948315253543637, guid: 5478c7e424dacef408985dc6d0605acd, type: 2}
@@ -3040,13 +3040,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 6
+  m_fontSizeBase: 6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

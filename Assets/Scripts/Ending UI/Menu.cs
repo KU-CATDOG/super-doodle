@@ -30,6 +30,8 @@ public class Menu : MonoBehaviour
 
     public bool moving = false;
 
+    private bool isReadyToStart = false;
+
     void Start()
     {
         var gen = new RandomKeyGenerator();
@@ -39,10 +41,13 @@ public class Menu : MonoBehaviour
         start = player.GetChild(0).position;
         GameManager.Inst.gameState = GameManager.GameState.Menu;
 
+        StartCoroutine(InitMenuScene());
     }
 
     void Update()
     {
+        if (!isReadyToStart) return;
+
         Vector2 end = player.GetChild(0).position;
 
         player.RotateAround(Earth.position, Vector3.back, rotateSpeed);
@@ -77,6 +82,7 @@ public class Menu : MonoBehaviour
         }
 
         curAngle = GetAngle(start, end);
+        Debug.Log(curAngle);
 
         //if 버튼에 도착할 경우
         if (curAngle % 180 >= 42.5 && curAngle % 180 <= 47.5)
@@ -154,5 +160,18 @@ public class Menu : MonoBehaviour
     {
         settings.SetActive(false);
         inSetting = false;
+    }
+
+    private IEnumerator InitMenuScene()
+    {
+        float timer = 0;
+        while (timer < 1f)
+        {
+            player.GetChild(0).position = Vector3.Lerp(new Vector3(0, 1, 0), start, timer);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        isReadyToStart = true;
+        start = player.GetChild(0).position;
     }
 }
