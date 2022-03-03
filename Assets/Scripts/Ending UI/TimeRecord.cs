@@ -75,7 +75,7 @@ public class TimeRecord : MonoBehaviour
     {
         var toSend = new ReqScore
         {
-            name = submitName.text.Trim().Substring(0, 4),
+            name = submitName.text.Trim().Substring(0, Mathf.Min(submitName.text.Length, 4)),
             record = Mathf.FloorToInt((endTime - GameManager.Inst.tempTimer) * 1000),
             stage = (int)GameManager.Inst.currentBoss
         };
