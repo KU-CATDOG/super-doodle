@@ -21,6 +21,10 @@ public class Node : MonoBehaviour
     [SerializeField]
     private int mapIndex;
 
+    [Header("Post-it")]
+    [SerializeField]
+    private List<GameObject> postItsNearby = new List<GameObject>();
+
     public Vector3 offset = new Vector3();
 
     // Start is called before the first frame update
@@ -38,10 +42,18 @@ public class Node : MonoBehaviour
         if (isPlayerOn)
         {
             currNode = true;
+            postItsNearby.ForEach(e =>
+            {
+                e.SetActive(true);
+            });
         }
         else
         {
             currNode = false;
+            postItsNearby.ForEach(e =>
+            {
+                e.SetActive(false);
+            });
         }
 
         if (currNode)
