@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     KeyCode key;
-    private float rotateSpeed = 0.03f;
+    private float rotateSpeed = 0f;
 
     [Header("GameObjects")]
     [SerializeField] private Transform Earth;
@@ -36,14 +36,14 @@ public class Menu : MonoBehaviour
         key = gen.GetKeyCode();
         // key = EarthKeyGenerator.KeyGenerator.GetKeyCode();
         nextKey.text = EarthKeyGenerator.KeyGenerator.KeyCodeToString(key);
-        start = player.position;
+        start = player.GetChild(0).position;
         GameManager.Inst.gameState = GameManager.GameState.Menu;
 
     }
 
     void Update()
     {
-        Vector2 end = player.position;
+        Vector2 end = player.GetChild(0).position;
 
         player.RotateAround(Earth.position, Vector3.back, rotateSpeed);
 
@@ -51,17 +51,29 @@ public class Menu : MonoBehaviour
         {
             SceneManager.LoadScene("InitialScene");
         }
-        if (Input.GetKeyDown(key) && !inSetting)
+        if (!inSetting)
         {
-            // 플레이어 이동
-            rotateSpeed += 0.01f;
+            if (Input.GetKeyDown(key))
+            {
+                // 플레이어 이동
+                rotateSpeed += 0.02f;
+                player.GetComponentInChildren<SpriteController>().SetAnimatiorParameter("Speed", rotateSpeed * 10);
 
-            /*curAngle -= 90f;
-            angle = Quaternion.Euler(0, 0, curAngle);
-            StartCoroutine(RotatePlayer(angle));*/
+                /*curAngle -= 90f;
+                angle = Quaternion.Euler(0, 0, curAngle);
+                StartCoroutine(RotatePlayer(angle));*/
 
-            key = EarthKeyGenerator.KeyGenerator.GetKeyCode();
-            nextKey.text = EarthKeyGenerator.KeyGenerator.KeyCodeToString(key);
+                key = EarthKeyGenerator.KeyGenerator.GetKeyCode();
+                nextKey.text = EarthKeyGenerator.KeyGenerator.KeyCodeToString(key);
+            }
+            else if (Input.anyKeyDown)
+            {
+                rotateSpeed -= 0.02f;
+                player.GetComponentInChildren<SpriteController>().SetAnimatiorParameter("Speed", rotateSpeed * 10);
+
+                key = EarthKeyGenerator.KeyGenerator.GetKeyCode();
+                nextKey.text = EarthKeyGenerator.KeyGenerator.KeyCodeToString(key);
+            }
         }
 
         curAngle = GetAngle(start, end);
