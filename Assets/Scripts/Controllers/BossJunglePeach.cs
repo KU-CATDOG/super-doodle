@@ -18,9 +18,16 @@ public class BossJunglePeach : MonoBehaviour
 
     private IEnumerator PeachCoroutine()
     {
-        yield return new WaitForSeconds(1f);
+        float timer = 0;
+        while (timer < 2f)
+        {
+            timer += Time.deltaTime;
+            transform.localPosition += transform.localPosition.normalized * Time.deltaTime;
 
-        bossJungle.MoveSpeed *= 1.1f;
+            yield return null;
+        }
+
+        bossJungle.MoveSpeed *= 1.3f;
         Debug.Log("이동 속도 증가!");
 
         Destroy(gameObject);
