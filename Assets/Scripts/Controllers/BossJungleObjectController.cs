@@ -88,8 +88,11 @@ namespace Controllers
         protected override void OnMeleeHit(EarthObject hitter)
         {
             phase++;
-
-            if (phase == 3)
+            if (phase == 1 || phase == 2)
+            {
+                Holder.StartCoroutine(ChangePhase(phase));
+            }
+            else if (phase == 3)
             {
                 // 승리
                 GameManager.Inst.gameState = GameManager.GameState.EndGame;
@@ -98,6 +101,37 @@ namespace Controllers
                 Object.Destroy(Holder.gameObject);
                 SceneManager.LoadScene("ResultScene");
                 return;
+            }
+        }
+
+        private IEnumerator ChangePhase(int currentPhase)
+        {
+            var jungleTr = Holder.GetComponentInChildren<SpriteController>().transform;
+
+            float timer = 0;
+            while (timer < 0.5f)
+            {
+                jungleTr.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0), timer * 2);
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            switch (currentPhase)
+            {
+                case 1:
+                    jungleTr.GetComponent<SpriteController>().SetSprite(1);
+                    break;
+                case 2:
+                default:
+                    jungleTr.localScale *= 1.2f;
+                    break;
+            }
+            while (timer < 1f)
+            {
+                jungleTr.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 360, 0), timer * 2 - 1);
+
+                timer += Time.deltaTime;
+                yield return null;
             }
         }
 
@@ -120,13 +154,13 @@ namespace Controllers
             Transform playerModel = player.transform.GetChild(0);
             while (timer < 0.25f)
             {
-                playerModel.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0), timer * 2);
+                playerModel.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0), timer * 4);
                 timer += Time.deltaTime;
                 yield return null;
             }
             while (timer < 0.5f)
             {
-                playerModel.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 359, 0), timer * 2);
+                playerModel.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 359, 0), timer * 4 - 1);
                 timer += Time.deltaTime;
                 yield return null;
             }

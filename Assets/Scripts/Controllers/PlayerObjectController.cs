@@ -15,7 +15,7 @@ namespace Controllers
 
         protected float maxMoveSpeed =
 #if UNITY_EDITOR
-            Mathf.PI;
+            Mathf.PI / 2;
 #else
             Mathf.PI / 2;
 #endif
@@ -58,18 +58,11 @@ namespace Controllers
 
         public override void OnEarthKeyPressed(bool corrected)
         {
-#if UNITY_EDITOR
-            Holder.MoveSpeed = corrected
-                ? Mathf.Min(Holder.MoveSpeed + Mathf.PI, maxMoveSpeed)
-                : Mathf.Max(Holder.MoveSpeed - Mathf.PI, 0);
-            spriteController.SetAnimatiorParameter("Speed", Holder.MoveSpeed);
-#else
             // 이쪽이 빌드시 반영되는 수치
             Holder.MoveSpeed = corrected
                 ? Mathf.Min(Holder.MoveSpeed + 0.2f, maxMoveSpeed)
                 : Mathf.Max(Holder.MoveSpeed - 0.2f, 0);
             spriteController.SetAnimatiorParameter("Speed", Holder.MoveSpeed);
-#endif
         }
 
         public override void OnMeleeReady()
