@@ -21,6 +21,8 @@ namespace Controllers
 
         protected override bool AttackEnabled => true;
 
+        private BossHadesHearts heartController;
+
         protected override IEnumerator LoadResources()
         {
             yield return AssetLoaderManager.Inst.LoadPrefabAsync<GameObject>("EarthObjects/Hades", x =>
@@ -39,6 +41,8 @@ namespace Controllers
             Holder.MoveSpeed = Mathf.PI / 10;
 
             MessageSystem.Instance.Subscribe<SingleKeyPressedEvent>(OnEvent);
+
+            heartController = GameObject.FindGameObjectWithTag("Heart")?.GetComponent<BossHadesHearts>();
 
             phase = 0;
             startTime = Time.time;
@@ -121,7 +125,7 @@ namespace Controllers
             if (now - recentMeteorTime < MeteorCooltime) return;
 
             var newMeteor = Object.Instantiate(meteorPrefab);
-            newMeteor.Init(Holder.Earth.Player, MeteorSpeed, MeteorSize);
+            newMeteor.Init(Holder.Earth.Player, MeteorSpeed, MeteorSize, heartController);
 
             var xRange = Holder.Earth.Radius + 1;
             var x = xRange * (2 * Random.value - 1);

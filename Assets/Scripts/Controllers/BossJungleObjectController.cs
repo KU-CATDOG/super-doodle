@@ -1,6 +1,7 @@
 using System.Collections;
 using Tool;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Controllers
 {
@@ -69,7 +70,7 @@ namespace Controllers
                 //Debug.Log(obj.position);
 
                 float x = Time.time * 3 % 3;
-                float y = x < 2 ? x : -2 * x + 6;
+                float y = x < 2 ? 0.5f * x : -1 * x + 3;
 
                 obj.localPosition = new Vector3(obj.localPosition.x, y + 3, obj.localPosition.z);
 
@@ -91,6 +92,12 @@ namespace Controllers
             if (phase == 3)
             {
                 // 승리
+                GameManager.Inst.gameState = GameManager.GameState.EndGame;
+                GameManager.Inst.isRecentGameWin = true;
+                UnloadResources();
+                Object.Destroy(Holder.gameObject);
+                SceneManager.LoadScene("ResultScene");
+                return;
             }
         }
 

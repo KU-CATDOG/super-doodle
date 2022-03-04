@@ -19,12 +19,14 @@ namespace Controllers
         private float moveSpeed;
 
         private float CollisionDistance;
+        private BossHadesHearts heartCont;
 
-        public void Init(EarthObject target, float speed, float size)
+        public void Init(EarthObject target, float speed, float size, BossHadesHearts heartController)
         {
             targetPlayer = target;
             moveSpeed = speed;
             CollisionDistance = size;
+            heartCont = heartController;
             GetComponent<SpriteController>().SetSprite(size > 0.5f ? 0 : 1);
         }
 
@@ -63,6 +65,7 @@ namespace Controllers
             {
                 // 운석에 맞은 횟수를 플레이어 오브젝트에 저장한다.
                 targetPlayer.SetValue("meteor_hitcount", hitCount + 1);
+                heartCont.SetHealth(MaxHit - (hitCount));
             }
             else
             {
