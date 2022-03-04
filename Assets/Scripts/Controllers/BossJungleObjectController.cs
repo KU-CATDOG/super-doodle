@@ -109,6 +109,28 @@ namespace Controllers
             lastDodgeTime = Time.time;
             Holder.StartCoroutine(BossJungleBanana.DodgeBanana(0.5f));
             Holder.StartCoroutine(BossJunglePineApple.DodgePineApple(0.5f));
+            var player = Holder.Earth.Player;
+            Holder.StartCoroutine(DodgePlayer(player));
+            Debug.Log("Dodge");
+        }
+
+        private IEnumerator DodgePlayer(EarthObject player)
+        {
+            float timer = 0f;
+            Transform playerModel = player.transform.GetChild(0);
+            while (timer < 0.25f)
+            {
+                playerModel.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0), timer * 2);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            while (timer < 0.5f)
+            {
+                playerModel.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 359, 0), timer * 2);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            playerModel.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
         public override void OnUpdate()
