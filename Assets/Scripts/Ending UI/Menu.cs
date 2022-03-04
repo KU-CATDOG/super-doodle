@@ -82,7 +82,6 @@ public class Menu : MonoBehaviour
         }
 
         curAngle = GetAngle(start, end);
-        Debug.Log(curAngle);
 
         //if 버튼에 도착할 경우
         if (curAngle % 180 >= 42.5 && curAngle % 180 <= 47.5)
@@ -90,6 +89,7 @@ public class Menu : MonoBehaviour
             space.text = "Press Space";
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.ButtonPress);
                 settings.SetActive(true);
                 inSetting = true;
             }
@@ -99,6 +99,7 @@ public class Menu : MonoBehaviour
             space.text = "Press Space";
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.ButtonPress);
                 SceneManager.LoadScene("MapSelect");
             }
         }

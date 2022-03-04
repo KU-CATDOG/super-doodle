@@ -9,6 +9,7 @@ let subscribedNumber = -1;
 window.onbeforeunload = unsubscribe;
 
 $(function() {
+    getRanks();
     subscribe();
 });
 
@@ -23,7 +24,7 @@ function unsubscribe() {
 function subscribe() {
     // 주기적으로 랭크를 가져오기 setInterval
     if (subscribedNumber <= 0) {
-        subscribedNumber = setInterval(getRanks, 1000);
+        subscribedNumber = setInterval(getRanks, 5000);
     }
 }
 
@@ -37,8 +38,9 @@ function getRanks() {
         separateByStage(json);
     })
     .fail((jqXHR, textStatus) => {
-        alert("순위를 가져오는데 실패했습니다.");
+        alert("순위를 가져오는데 실패했습니다. 새로고침해주세요.");
         console.error(textStatus);
+        unsubscribe();
     });
 }
 

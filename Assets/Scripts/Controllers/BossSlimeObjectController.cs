@@ -10,7 +10,7 @@ namespace Controllers
     {
         private int hitCount;
 
-        protected override float InvincibleSecond => 3;
+        protected override float InvincibleSecond => 0.5f;
 
         public override ObjectSide Side => ObjectSide.Enemy;
 

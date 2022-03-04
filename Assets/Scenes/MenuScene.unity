@@ -322,7 +322,7 @@ MonoBehaviour:
   nextKey: {fileID: 1704294126}
   space: {fileID: 489659436}
   playerObject: {fileID: 2057980696}
-  settings: {fileID: 985609241}
+  settings: {fileID: 396885904}
   save: {fileID: 341535005}
   moving: 0
 --- !u!4 &76281830

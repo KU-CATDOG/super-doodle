@@ -66,6 +66,7 @@ namespace Controllers
                 // 운석에 맞은 횟수를 플레이어 오브젝트에 저장한다.
                 targetPlayer.SetValue("meteor_hitcount", hitCount + 1);
                 heartCont.SetHealth(MaxHit - (hitCount));
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.MeteorCrash);
             }
             else
             {

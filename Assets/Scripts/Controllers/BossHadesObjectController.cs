@@ -15,7 +15,7 @@ namespace Controllers
 
         private BossHadesMeteor meteorPrefab;
 
-        protected override float InvincibleSecond => 3;
+        protected override float InvincibleSecond => 0.2f;
 
         public override ObjectSide Side => ObjectSide.Enemy;
 
@@ -138,16 +138,16 @@ namespace Controllers
 
         private float MeteorCooltime => phase switch
         {
-            0 => 1f,
-            1 => 0.5f,
-            _ => 0.25f,
+            0 => 2f,
+            1 => 1f,
+            _ => 0.5f,
         };
 
         private float MeteorSpeed => phase switch
         {
-            0 => 4,
-            1 => 8,
-            _ => 12,
+            0 => 2,
+            1 => 4,
+            _ => 6,
         };
 
         private float MeteorSize => phase switch

@@ -7,6 +7,8 @@ public class SoundManager : SingletonBehavior<SoundManager>
     private readonly List<AudioSource> audioSources = new List<AudioSource>();
     private readonly HashSet<int> usingIndexs = new HashSet<int>();
 
+    public float masterVolume = 0.6f;
+
     private void Awake()
     {
         audioSources.Add(gameObject.AddComponent<AudioSource>());
@@ -47,7 +49,7 @@ public class SoundManager : SingletonBehavior<SoundManager>
         StartCoroutine(AssetLoaderManager.Inst.LoadSoundAsync<AudioClip>(soundSettings.name, a =>
         {
             audioSourceToUse.clip = a;
-            audioSourceToUse.volume = soundSettings.volume;
+            audioSourceToUse.volume = soundSettings.volume * masterVolume;
             audioSourceToUse.Play();
             usingIndexs.Remove(emptyAudioIndex);
         }));
@@ -60,6 +62,7 @@ public class SoundManager : SingletonBehavior<SoundManager>
         PaperTear,
         PaperCut,
         ButtonPress,
+        MeteorCrash,
     }
 
     private class SoundSettings
@@ -91,6 +94,7 @@ public class SoundManager : SingletonBehavior<SoundManager>
             Sounds.PaperTear => new SoundSettings("종이찢기1"),
             Sounds.KnifeDash => new SoundSettings("검베기1", 0.5f),
             Sounds.ButtonPress => new SoundSettings("버튼(15)"),
+            Sounds.MeteorCrash => new SoundSettings("운석충돌", 0.5f),
             _ => new SoundSettings("검베기(기모으기)"),
         };
     #endregion

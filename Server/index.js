@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { readFileSync, writeFileSync } from 'fs';
+import morgan from 'morgan';
 
 const __dirname = path.resolve();
 
@@ -48,6 +49,7 @@ const PORT = 5454;
 const inputQueue = [];
 
 app.use(express.json());
+app.use(morgan());
 app.use(express.static(__dirname + "/BasicSite"));
 
 app.get("", (req, res) => {
