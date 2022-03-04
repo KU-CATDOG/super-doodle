@@ -53,7 +53,7 @@ namespace Controllers
         {
             targetPlayer.Radian -= Mathf.PI / 6;
 
-            targetPlayer.MoveSpeed = 0;
+            targetPlayer.MoveSpeed *= 0.4f;
         }
     }
 }
