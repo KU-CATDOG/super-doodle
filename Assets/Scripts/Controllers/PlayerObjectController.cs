@@ -63,6 +63,15 @@ namespace Controllers
                 ? Mathf.Min(Holder.MoveSpeed + 0.2f, maxMoveSpeed)
                 : Mathf.Max(Holder.MoveSpeed - 0.2f, 0);
             spriteController.SetAnimatiorParameter("Speed", Holder.MoveSpeed);
+
+            if (corrected)
+            {
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.KeyCorrect);
+            }
+            else
+            {
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.KeyWrong);
+            }
         }
 
         public override void OnMeleeReady()

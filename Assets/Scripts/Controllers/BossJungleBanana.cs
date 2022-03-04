@@ -35,7 +35,8 @@ namespace Controllers
                 (playerPos.y - bananaPos.y) * (playerPos.y - bananaPos.y) >
                 CollisionDistance * CollisionDistance) return;
 
-            targetPlayer.MoveSpeed /= 2;
+            targetPlayer.MoveSpeed *= 0.4f;
+            SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.KeyWrong);
 
             Destroy(gameObject);
         }

@@ -28,6 +28,7 @@ public class BossJunglePeach : MonoBehaviour
         }
 
         bossJungle.MoveSpeed *= 1.3f;
+        SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.SpeedUp);
         Debug.Log("이동 속도 증가!");
 
         Destroy(gameObject);

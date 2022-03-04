@@ -36,6 +36,7 @@ namespace Controllers
                 CollisionDistance * CollisionDistance) return;
 
             KnockBackPlayer();
+            SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.SpeedUp);
 
             Destroy(gameObject);
         }
@@ -53,7 +54,7 @@ namespace Controllers
         {
             targetPlayer.Radian -= Mathf.PI / 6;
 
-            targetPlayer.MoveSpeed *= 0.4f;
+            targetPlayer.MoveSpeed *= 0.6f;
         }
     }
 }

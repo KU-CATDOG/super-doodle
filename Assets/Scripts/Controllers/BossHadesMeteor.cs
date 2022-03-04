@@ -70,6 +70,7 @@ namespace Controllers
             }
             else
             {
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.MeteorCrash);
                 Destroy(targetPlayer.gameObject);
                 SceneManager.LoadScene("ResultScene");
             }

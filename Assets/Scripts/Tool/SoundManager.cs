@@ -63,6 +63,9 @@ public class SoundManager : SingletonBehavior<SoundManager>
         PaperCut,
         ButtonPress,
         MeteorCrash,
+        KeyWrong,
+        KeyCorrect,
+        SpeedUp,
     }
 
     private class SoundSettings
@@ -94,7 +97,10 @@ public class SoundManager : SingletonBehavior<SoundManager>
             Sounds.PaperTear => new SoundSettings("종이찢기1"),
             Sounds.KnifeDash => new SoundSettings("검베기1", 0.5f),
             Sounds.ButtonPress => new SoundSettings("버튼(15)"),
-            Sounds.MeteorCrash => new SoundSettings("운석충돌", 0.5f),
+            Sounds.MeteorCrash => new SoundSettings("운석충돌", 0.3f),
+            Sounds.KeyWrong => new SoundSettings("버튼(32)"),
+            Sounds.KeyCorrect => new SoundSettings("종이찢기2", 0.5f),
+            Sounds.SpeedUp => new SoundSettings("버튼(28)", 0.5f),
             _ => new SoundSettings("검베기(기모으기)"),
         };
     #endregion

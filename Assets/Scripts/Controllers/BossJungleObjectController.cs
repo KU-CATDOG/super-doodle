@@ -15,7 +15,7 @@ namespace Controllers
         private BossJunglePineApple pineApplePrefab;
         private BossJunglePeach peachPrefab;
 
-        protected override float InvincibleSecond => 0.5f;
+        protected override float InvincibleSecond => 1.5f;
 
         public override ObjectSide Side => ObjectSide.Enemy;
 
