@@ -17,12 +17,14 @@ public class Menu : MonoBehaviour
     [SerializeField] private TextMeshPro nextKey;
 
     [SerializeField] private TextMeshPro space;
+    [SerializeField] private GameObject spaceArrow;
     [SerializeField] GameObject playerObject;
 
     [SerializeField] GameObject settings;
     [SerializeField] Button save;
 
     bool inSetting = false;
+    bool isKeyPressed = false;
 
     Quaternion angle = Quaternion.Euler(0, 0, 0);
     float curAngle = 0f;
@@ -73,7 +75,7 @@ public class Menu : MonoBehaviour
             }
             else if (Input.anyKeyDown)
             {
-                rotateSpeed -= 0.02f;
+                rotateSpeed -= 0.01f;
                 player.GetComponentInChildren<SpriteController>().SetAnimatiorParameter("Speed", rotateSpeed * 10);
 
                 key = EarthKeyGenerator.KeyGenerator.GetKeyCode();
@@ -84,7 +86,7 @@ public class Menu : MonoBehaviour
         curAngle = GetAngle(start, end);
 
         //if 버튼에 도착할 경우
-        if (curAngle % 180 >= 42.5 && curAngle % 180 <= 47.5)
+        if (curAngle % 180 >= 37.5 && curAngle % 180 <= 52.5)
         {
             space.text = "Press Space";
             if (Input.GetKeyDown(KeyCode.Space))
@@ -94,7 +96,7 @@ public class Menu : MonoBehaviour
                 inSetting = true;
             }
         }
-        else if (curAngle % 180 >= 87.5 && curAngle % 180 <= 92.5)
+        else if (curAngle % 180 >= 82.5 && curAngle % 180 <= 97.5)
         {
             space.text = "Press Space";
             if (Input.GetKeyDown(KeyCode.Space))
@@ -103,15 +105,20 @@ public class Menu : MonoBehaviour
                 SceneManager.LoadScene("MapSelect");
             }
         }
-        else if (curAngle % 180 >= 132.5 && curAngle % 180 <= 137.5)
+        else if (curAngle % 180 >= 122.5 && curAngle % 180 <= 142.5)
         {
             space.text = "Press Space";
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                // SceneManager.LoadScene("Credit");
+                Application.OpenURL("https://github.com/KU-CATDOG/super-doodle");
             }
         }
-        else { space.text = ""; }
+        else 
+        {
+            space.transform.position = new Vector3(0, 4, 0);
+            space.text = "";
+            spaceArrow.SetActive(false);
+        }
 
     }
 
@@ -170,6 +177,10 @@ public class Menu : MonoBehaviour
         {
             player.GetChild(0).position = Vector3.Lerp(new Vector3(0, 1, 0), start, timer);
             timer += Time.deltaTime;
+            yield return null;
+        }
+        while (!Input.anyKeyDown)
+        {
             yield return null;
         }
         isReadyToStart = true;

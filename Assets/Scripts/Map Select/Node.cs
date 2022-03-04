@@ -63,6 +63,7 @@ public class Node : MonoBehaviour
                 if(mapIndex < SceneManager.sceneCountInBuildSettings)
                 {
                     //SelectedLevel.index = mapIndex;
+                    SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.ButtonPress);
                     SceneManager.LoadScene(mapIndex);
                     //SceneManager.LoadScene(1); // samplescene
                 }
@@ -71,6 +72,7 @@ public class Node : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 //Debug.Log("Return to Menu");
+                SoundManager.Inst.PlayEffectSound(SoundManager.Sounds.ButtonPress);
                 SceneManager.LoadScene("MenuScene");
             }
 

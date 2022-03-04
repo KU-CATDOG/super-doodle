@@ -138,11 +138,11 @@ namespace Controllers
         private void OnEvent(IEvent e)
         {
             if (!(e is SingleKeyPressedEvent { PressedKey: KeyCode.Space })) return;
-            if (Time.time - lastDodgeTime < 1f) return;
+            if (Time.time - lastDodgeTime < 1.5f) return;
 
             lastDodgeTime = Time.time;
-            Holder.StartCoroutine(BossJungleBanana.DodgeBanana(0.5f));
-            Holder.StartCoroutine(BossJunglePineApple.DodgePineApple(0.5f));
+            Holder.StartCoroutine(BossJungleBanana.DodgeBanana(1f));
+            Holder.StartCoroutine(BossJunglePineApple.DodgePineApple(1f));
             var player = Holder.Earth.Player;
             Holder.StartCoroutine(DodgePlayer(player));
             Debug.Log("Dodge");
@@ -152,15 +152,15 @@ namespace Controllers
         {
             float timer = 0f;
             Transform playerModel = player.transform.GetChild(0);
-            while (timer < 0.25f)
+            while (timer < 0.5f)
             {
-                playerModel.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0), timer * 4);
+                playerModel.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 0, 0), Quaternion.Euler(0, 180, 0), timer * 2);
                 timer += Time.deltaTime;
                 yield return null;
             }
-            while (timer < 0.5f)
+            while (timer < 1f)
             {
-                playerModel.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 359, 0), timer * 4 - 1);
+                playerModel.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(0, 180, 0), Quaternion.Euler(0, 359, 0), timer * 2 - 1);
                 timer += Time.deltaTime;
                 yield return null;
             }
